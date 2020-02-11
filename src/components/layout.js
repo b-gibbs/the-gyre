@@ -1,9 +1,10 @@
 /* eslint-disable react/no-danger */
+import '../styles.less';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Header from './Header';
 import Main from './Main';
-import { Layout as Wrapper } from 'gatsby-theme-apollo-core'
+
 
 export default ({ children, title, className = '' }) => [
   <Helmet
@@ -28,11 +29,8 @@ export default ({ children, title, className = '' }) => [
     <meta name="theme-color" content="#ffffff" />
 
   </Helmet>,
-  <Wrapper>
-    <Header key="app-header" />
-    <Main key="app-main" className={className}>
-      {children}
-    </Main>
-  </Wrapper>
-  
+  <Header key="app-header" />,
+  <Main key="app-main" className={className}>
+    {children}
+  </Main>,
 ];
