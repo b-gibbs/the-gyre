@@ -1,0 +1,55 @@
+
+
+- start a new site in a new directory
+gatsby new [siteName]
+
+- add emotion
+```zsh
+yarn add gatsby-plugin-emotion @emotion/core @emotion/styled
+```
+
+- add mdx
+```zsh
+yarn add gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+```
+
+- add gatsby-theme-apollo-core
+```zsh
+yarn add gatsby-theme-apollo-core
+```
+
+- add `gatsby-theme-apollo-core`, to gatsby-config.js
+
+- build navigation and header
+
+- build layout
+
+- add page-creator
+```zsh
+yarn add gatsby-plugin-page-creator
+```
+
+- add this to gatsby-config.js
+```json
+    {
+      resolve: 'gatsby-plugin-page-creator',
+      options: {
+        path: `${__dirname}/src/pages/`,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        extensions: ['.mdx', '.md'],
+        defaultLayouts: {
+          default: require.resolve('./src/templates/page.js'),
+        },
+      },
+    },
+```
+- add index.mdx in src/pages
+
+
+
+
+

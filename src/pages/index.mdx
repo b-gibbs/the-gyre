@@ -1,0 +1,136 @@
+---
+title: Welcome
+---
+import Layout from '../components/Layout.js';
+import breakpoints from '../utils/breakpoints.js';
+import HeroWrapper from '../components/HeroWrapper.js';
+import HeroContent from '../components/HeroContent.js';
+import Hero from '../components/Hero.js';
+import GatsbyImage from 'gatsby-image';
+import { colors } from 'gatsby-theme-apollo-core';
+
+export const pageQuery = graphql`
+  query HomePageQuery {
+    ds: file(relativePath: { eq: "ds-chart.png" }) {
+      ...ImgFields
+    }
+    cs: file(relativePath: { eq: "cs-chart.png" }) {
+      ...ImgFields
+    }
+    pdm: file(relativePath: { eq: "pdm-chart.png" }) {
+      ...ImgFields
+    }
+  }
+  fragment ImgFields on File {
+    image: childImageSharp {
+      fluid(maxWidth: 400, traceSVG: { color: "#e7e3e8" }) {
+        ...GatsbyImageSharpFluid_withWebp_tracedSVG
+      }
+    }
+  }
+`
+
+export default ({ children, ...data }) => (
+  <HeroWrapper>
+    <Hero 
+      title="Data ∩ Product"
+      subtitle="The intersection of data science and product management."
+    />
+    <HeroContent id='home-content'>
+      {children}
+    </HeroContent>
+  </HeroWrapper>
+);
+
+<div style={{ 
+  textAlign: 'center',
+}}>
+
+<h2 style={{
+  color: colors.text1,
+}}>
+Data science for product managers </h2>
+
+<h4 style={{
+  color: colors.primary,
+}}>
+A top-down overview of data science aimed at product managers.
+</h4>
+
+</div>
+
+<div>
+
+Data science will continue to grow in use and importance for the foreseeable future. Increasingly, product managers are going to be adding a new component to our teams-- a data scientist (or several). Whether the product or service we manage is wholly or partially based in machine learning or deep learning, we need to be able to speak with our new data teammates in an informed manner, both to understand what they're doing and also to be able to walk through decisions with them and understand the trade-offs.
+
+</div>
+
+<section class='charts'>
+  <ul style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridGap: '1rem',
+    alignContent: 'center',
+    justifyContent: 'center',   
+    listStyle: 'none',
+    margin: 0,
+  }}>
+    <li style={{
+      alignSelf: 'top',
+      justifySelf: 'center',
+    }}>
+      <p style={{
+        fontSize: '14px',
+        textAlign: 'center',
+        color: colors.primary,
+        marginBottom: '5px',
+      }}>
+      Resources for Data Scientists</p>
+      <GatsbyImage 
+        alt="Data Scientists"
+        fluid={props.data.ds.image.fluid}
+      />
+      <p>Resources for data scientists build from little or no knowledge. It takes weeks or months of concentrated study to build up a base of knowledge.</p>
+    </li>
+    <li style={{
+      alignSelf: 'top',
+      justifySelf: 'center',
+    }}>
+      <p style={{
+        fontSize: '14px',
+        textAlign: 'center',
+        color: colors.primary,
+        marginBottom: '5px',
+      }}>
+      Resources for Executives (AI Strategy)</p>
+      <GatsbyImage 
+        alt="C-Suite"
+        fluid={props.data.cs.image.fluid}
+      />
+      <p>Resources for executives are top-down. They focus on designing team hierarchies, finding the right people, setting realistic goals, and, to some extent, strategy.</p>
+    </li>
+    <li style={{
+      alignSelf: 'top',
+      justifySelf: 'center',
+    }}>
+      <p style={{
+        fontSize: '14px',
+        textAlign: 'center',
+        color: colors.primary,
+        marginBottom: '5px',
+      }}>
+      Where product managers operate</p>
+      <GatsbyImage 
+        alt="Product Managers"
+        fluid={props.data.pdm.image.fluid}
+      />
+      <p>Product managers operate in-between the tactics of data scientists and the strategy of C-suite executives. They rarely have time to build a base of knowledge a practicing data scientist would have, but they need to go deeper into the realm of data science than C-suite strategy books go in order to have meaningful conversations with data teammates about strategic objectives and tradeoffs.</p>
+    </li>
+  </ul>
+</section>
+
+<section style={{
+  gridArea: '5 / 1 / 5 / 4',
+}}>
+This site is aimed at that underserved area in the middle-- the space in-between the bottom-up resources intended for would-be data scientists and the top-down resources meant for C-suite executives designing strategy for the organization.
+</section>

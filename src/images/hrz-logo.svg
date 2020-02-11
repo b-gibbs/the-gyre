@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="42px" viewBox="0 0 200 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>Slice</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#B2CED5" fill="#1D1E1D" x="2" y="1" width="196" height="40" rx="19.5"></rect>
+        <text id="data∩product" font-family="SFMono-Regular, SF Mono" font-size="24" font-weight="normal" letter-spacing="-1.2">
+            <tspan x="14" y="30" fill="#9CDCFE">data</tspan>
+            <tspan x="68.54375" y="30" font-family="Menlo-Regular, Menlo" font-size="36" fill="#CE9178">∩</tspan>
+            <tspan x="90.2175781" y="30" fill="#C586C0">product</tspan>
+        </text>
+    </g>
+</svg>

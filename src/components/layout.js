@@ -1,51 +1,38 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
+/* eslint-disable react/no-danger */
+import React from 'react';
+import Helmet from 'react-helmet';
+import Header from './Header';
+import Main from './Main';
+import { Layout as Wrapper } from 'gatsby-theme-apollo-core'
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+export default ({ children, title, className = '' }) => [
+  <Helmet
+    key="app-head"
+    titleTemplate="%s · Data ∩ Product"
+    defaultTitle="Data ∩ Product"
+  >
+    <html lang="en" />
 
-import Header from "./header"
-import "./layout.css"
+    <meta charSet="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <title>{title}</title>
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+    {/* Favicon stuff from realfavicongenerator.net */}
+    <meta name="apple-mobile-web-app-title" content="thegyre.io" />
+    <meta name="application-name" content="thegyre.io" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
 
-  return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
-    </>
-  )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
-export default Layout
+  </Helmet>,
+  <Wrapper>
+    <Header key="app-header" />
+    <Main key="app-main" className={className}>
+      {children}
+    </Main>
+  </Wrapper>
+  
+];
