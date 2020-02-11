@@ -56,8 +56,8 @@ module.exports = {
       options: {
         name: `data-product`,
         short_name: `dp`,
-        start_url: `/`,
-        background_color: `#663399`,
+        start_url: `.`,
+        background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/dp-logo-16x16.png`, // This path is relative to the root of the site.
