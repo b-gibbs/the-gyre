@@ -72,8 +72,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages/`,
+        name: `content`,
+        path: `content`,
       },
     },
     {
@@ -90,6 +90,8 @@ module.exports = {
               maxWidth: 1380,
             },
           },
+          'gatsby-remark-code-titles',
+          'gatsby-remark-prismjs',
         ],
       },
     },
