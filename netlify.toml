@@ -4,8 +4,3 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/product/*"
-  to = "https://xenodochial-tereshkova-b37118.netlify.com/product/:splat"
-  status = 200
-  force = true
