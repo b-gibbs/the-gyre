@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "https://youthful-mahavira-a88750.netlify.com"
-  to = "https://thegyre.io/data/:splat"
+  from = "/data/*"
+  to = https://youthful-mahavira-a88750.netlify.com/data/:splat"
   status = 200
   force = true
