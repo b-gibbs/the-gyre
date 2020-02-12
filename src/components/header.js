@@ -71,6 +71,25 @@ const NavbarItem = styled(Link)({
   }
 })
 
+const NavbarA = styled('a')({
+  display: 'flex',
+  alignItems: 'center',
+  fontSize: '20px',
+  fontWeight: 300,
+  color: [colors.text1],
+  textDecoration: 'none',
+  border: '2px solid transparent',
+  borderRight: 'none',
+  borderLeft: 'none',
+  marginRight: '16px',
+  transition: 'all 250ms ease-out',
+  ':hover': {
+    opacity: colors.hoverOpacity,
+    color: colors.primary,
+  }
+})
+
+
 const NavbarBurger = styled.div({
   display: 'flex',
   margin: '0 0 0 auto',
@@ -83,14 +102,6 @@ const NavbarBurger = styled.div({
 
 
 const topLevelNav = [
-  {
-    href: "/data/",
-    label: "Data Science",
-  },
-  {
-    href: "/product/",
-    label: "Product Management",
-  },
   {
     href: "/blog/",
     label: "Blog",
@@ -113,6 +124,8 @@ const Header = () => {
           />
         </LogoLink>
         <NavbarMenu className='navbar-menu'>
+          <NavbarA href='https:/thegyre.io/data/'>Data Science</NavbarA>
+          <NavbarA href='https:/thegyre.io/product/'>Product Management</NavbarA>
           {topLevelNav.map(({ href, label, extraClass = "" }) => (
             <NavbarItem
               key={label}
@@ -125,13 +138,13 @@ const Header = () => {
           ))}
         </NavbarMenu>
         <NavbarBurger className='navbar-burger'>
-          <Burger open={open} setOpen={setOpen}/>
+          <Burger open={open} setOpen={setOpen} />
         </NavbarBurger>
       </NavbarBody>
-      <NavbarBodyMobile className='navbar-body-mobile' open={open} setOpen={setOpen}/>
+      <NavbarBodyMobile className='navbar-body-mobile' open={open} setOpen={setOpen} />
     </NavbarContainer>
   )
-}
+};
 
 
-export default Header
+export default Header;
