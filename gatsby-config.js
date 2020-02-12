@@ -1,3 +1,6 @@
+const queries = require("./src/utils/algolia")
+require("dotenv").config()
+
 module.exports = {
   siteMetadata: {
     title: `Data ∩ Product`,
@@ -93,8 +96,77 @@ module.exports = {
         ],
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        queries,
+        chunkSize: 10000, // default: 1000
+      },
+    },
+    {
+      resolve: `gatsby-plugin-segment-js`,
+      options: {
+        // your segment write key for your production environment
+        // when process.env.NODE_ENV === 'production'
+        // required; non-empty string
+        prodKey: `0TAk10vR8PfTF85gWdE7qf4nT2l3eYt1`,
+  
+        // if you have a development env for your segment account, paste that key here
+        // when process.env.NODE_ENV === 'development'
+        // optional; non-empty string
+        devKey: `SEGMENT_DEV_WRITE_KEY`,
+  
+        // boolean (defaults to false) on whether you want
+        // to include analytics.page() automatically
+        // if false, see below on how to track pageviews manually
+        trackPage: true,
+  
+        // boolean (defaults to false); whether to delay load Segment
+        // ADVANCED FEATURE: only use if you leverage client-side routing (ie, Gatsby <Link>)
+        // This feature will force Segment to load _after_ either a page routing change
+        // or user scroll, whichever comes first. This delay time is controlled by
+        // `delayLoadTime` setting. This feature is used to help improve your website's
+        // TTI (for SEO, UX, etc).  See links below for more info.
+        // NOTE: But if you are using server-side routing and enable this feature,
+        // Segment will never load (because although client-side routing does not do
+        // a full page refresh, server-side routing does, thereby preventing Segment
+        // from ever loading).
+        // See here for more context:
+        // GIF: https://github.com/benjaminhoffman/gatsby-plugin-segment-js/pull/19#issuecomment-559569483
+        // TTI: https://github.com/GoogleChrome/lighthouse/blob/master/docs/scoring.md#performance
+        // Problem/solution: https://marketingexamples.com/seo/performance
+        delayLoad: false,
+  
+        // number (default to 1000); time to wait after scroll or route change
+        // To be used when `delayLoad` is set to `true`
+        delayLoadTime: 1000
+      },
+    },
+    {
+      resolve: `gatsby-plugin-amplitude-analytics`,
+      options: {
+        // Specify the API key for your Amplitude Project (required)
+        apiKey: "6c3a99479b1be3358ee13143cb83a670",
+        // Puts tracking script in the head instead of the body (optional)
+        head: false,
+        // Prevents loading Amplitude and logging events if visitors have "Do Not Track" enabled (optional)
+        respectDNT: false,
+        // Avoids sending pageview hits from custom paths (optional)
+        exclude: [],
+        // Override the default event types (optional)
+        eventTypes: {
+          outboundLinkClick: 'OUTBOUND_LINK_CLICK',
+          pageView: 'PAGE_VIEW',
+        },
+        // Amplitude JS SDK configuration options (optional)
+        amplitudeConfig: {
+          saveEvents: true,
+          includeUtm: true,
+          includeReferrer: true
+        }
+      },
+    },
   ],
 }

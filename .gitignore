@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# private keys (Algolia)
+.env
+
 # Runtime data
 pids
 *.pid
@@ -65,5 +68,6 @@ public
 yarn-error.log
 .pnp/
 .pnp.js
+
 # Yarn Integrity file
 .yarn-integrity
