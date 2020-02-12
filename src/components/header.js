@@ -124,8 +124,8 @@ const Header = () => {
           />
         </LogoLink>
         <NavbarMenu className='navbar-menu'>
-          <NavbarA href='https:/thegyre.io/data/'>Data Science</NavbarA>
-          <NavbarA href='https:/thegyre.io/product/'>Product Management</NavbarA>
+          <NavbarA href='https://thegyre.io/data/'>Data Science</NavbarA>
+          <NavbarA href='https://thegyre.io/product/'>Product Management</NavbarA>
           {topLevelNav.map(({ href, label, extraClass = "" }) => (
             <NavbarItem
               key={label}
