@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import ContentArea from '../components/ContentArea';
+import SEO from '../components/SEO/SEO';
 
 export default ({ children, pageContext, data, location }) => {
   const postImage =
@@ -12,10 +13,22 @@ export default ({ children, pageContext, data, location }) => {
       ? data.file.childImageSharp.resize.src
       : null;
 
+  const seo = {
+    frontmatter: {
+      // By default, get the slug from the page location.
+      slug: location.pathname.replace(/[^\w\d-]/g, ''),
+      ...pageContext.frontmatter,
+    },
+    postImage,
+  };
+
   return (
     <Layout title={pageContext.frontmatter.title}>
+      <SEO {...seo} />
       <h1>{pageContext.frontmatter.title}</h1>
-      <ContentArea>{children}</ContentArea>
+      <div
+        render={() => <ContentArea>{children}</ContentArea>}
+      />
     </Layout>
   );
 };

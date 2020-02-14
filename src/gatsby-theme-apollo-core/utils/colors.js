@@ -7,4 +7,6 @@ exports.colors = {
   primaryLight: spaceKitColors.blue.lighter,
   secondary: spaceKitColors.orange.base,
   tertiary: spaceKitColors.yellow.base,
+  black: spaceKitColors.black.base,
+  white: spaceKitColors.white,
 };

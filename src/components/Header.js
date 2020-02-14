@@ -68,7 +68,11 @@ const NavbarItem = styled(Link)({
   ':hover': {
     opacity: colors.hoverOpacity,
     color: colors.primary,
-  }
+  },
+  [breakpoints.md]: {
+    fontSize: '18px',
+    marginRight: '12px',
+  },
 })
 
 const NavbarA = styled('a')({
@@ -86,7 +90,11 @@ const NavbarA = styled('a')({
   ':hover': {
     opacity: colors.hoverOpacity,
     color: colors.primary,
-  }
+  },
+  [breakpoints.md]: {
+    fontSize: '18px',
+    marginRight: '12px',
+  },
 })
 
 

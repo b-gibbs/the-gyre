@@ -4,7 +4,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Header from './Header';
 import Main from './Main';
-
+import config from '../../data/SiteConfig';
 
 export default ({ children, title, className = '' }) => [
   <Helmet
@@ -17,7 +17,8 @@ export default ({ children, title, className = '' }) => [
     <meta charSet="utf-8" />
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <title>{title}</title>
-
+    <meta name='description' content={config.siteDescription} />
+    
     {/* Favicon stuff from realfavicongenerator.net */}
     <meta name="apple-mobile-web-app-title" content="thegyre.io" />
     <meta name="application-name" content="thegyre.io" />

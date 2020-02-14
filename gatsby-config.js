@@ -18,7 +18,7 @@ module.exports = {
       logo: '',
     },
     social: {
-      twitter: '@',
+      twitter: '@in_the_gyre',
       fbAppID: '',
     },
     categories: [
@@ -91,6 +91,33 @@ module.exports = {
               maxWidth: 1380,
             },
           },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `content`,
+        name: 'content',
+      },
+    },
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          'gatsby-remark-embedder',
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 1380,
+              linkImagesToOriginal: false,
+            },
+          },
+          {
+            resolve: 'gatsby-remark-responsive-iframe',
+          },
+          'gatsby-remark-copy-linked-files',
+          'gatsby-remark-smartypants',
         ],
       },
     },
