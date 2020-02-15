@@ -53,13 +53,13 @@ const PageSizing = styled(ContentArea)({
   margin: '20px',
   listStyle: 'none',
   display: 'grid',
-  gridTemplateColumns: 'repeat(2, minmax(500px, 1fr))',
+  gridTemplateColumns: 'repeat(2, minmax(400px, 1fr))',
   gridGap: '1rem',
   alignContent: 'center',
   justifyContent: 'center',
   [breakpoints.lg]: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(1, minmax(500px, 1fr))',
+    gridTemplateColumns: 'repeat(1, minmax(400px, 1fr))',
     alignContent: 'center',
     justifyContent: 'center', 
   }

@@ -7,11 +7,13 @@ const CaptionCredit = styled('div')({
 });
 
 const Caption = styled('figcaption')({
+  marginTop: '2px',
   gridColumn: 1,
   justifyContent: 'left',
 });
 
 const Credit = styled('small')({
+  marginTop: '2px',
   gridColumn: 3,
   justifyContent: 'right',
   alignItems: 'right',
