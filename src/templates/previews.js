@@ -1,11 +1,9 @@
 /** @jsx jsx */
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { css, jsx } from '@emotion/core';
 import Layout from '../components/Layout';
-import CategoryLink from '../components/CategoryLink';
 import TagLink from '../components/TagLink';
 import Pagination from '../components/Pagination';
 import ContentArea from '../components/ContentArea';
@@ -129,12 +127,6 @@ const StyledButton = styled(Link)`
     background-color: ${colors.secondary};
   }
 `
-
-const StyledLink = styled(Link)({
-  color: colors.white,
-  minWidth: '100px',
-  height: '36px',
-})
 
 const Previews = ({
   pageContext: {

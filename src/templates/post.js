@@ -4,40 +4,37 @@ import MDXRenderer from 'gatsby-plugin-mdx/mdx-renderer';
 import styled from '@emotion/styled';
 import SEO from '../components/SEO/SEO';
 import Layout from '../components/Layout';
-import PostMeta from '../components/PostMeta';
 import ContentArea from '../components/ContentArea';
 import { colors } from 'gatsby-theme-apollo-core';
 import breakpoints from '../utils/breakpoints';
 
-const getTitle = frontmatter => frontmatter.seo_title || frontmatter.title;
-
 const BlogLayout = styled(Layout)({
   margin: '5rem auto 6rem',
+  maxWidth: '1000px',
 });
 
 
-const Blog = styled('article')({
+const Blog = styled('div')({
   marginBottom: '5rem',
-  display: 'grid',
-  gridAutoFlow: 'column',
-  gridColumnGap: '2rem',
-  gridTemplate: 'repeat(2, auto) / 170px 1fr',
 })
 
 const Header = styled('header')({
   fontSize: '24px',
   color: colors.text1,
-  gridColumnStart: 2,
+  margin: '40px',
+
+  [breakpoints.sm]: {
+    margin: '10px 20px',
+  }
 });
 
 
 const Content = styled(ContentArea)({
-  gridColumnStart: 2,
-});
+  margin: '40px',
 
-const Meta = styled(PostMeta)({
-  gridColumnStart: 1,
-  gridRowStart: 2,
+  [breakpoints.sm]: {
+    margin: '10px 20px',
+  }
 });
 
 const BlogHeading = styled('h1')({
@@ -65,11 +62,6 @@ export default ({ data: { post, image } }) => {
           <Header>
             <BlogHeading>{post.frontmatter.title}</BlogHeading>
           </Header>
-          <Meta
-            thumb={image.thumb}
-            categories={post.frontmatter.category}
-            tags={post.frontmatter.tag}
-          />
           <Content>{content}</Content>
         </Blog>
       </BlogLayout>
