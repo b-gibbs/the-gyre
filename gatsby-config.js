@@ -1,4 +1,68 @@
 
+require('dotenv').config();
+
+const buildAlgoliaSearchIndex =
+  process.env.BUILD_ALGOLIA_INDEX && process.env.BRANCH === 'master'
+  ? [
+      {
+        resolve: 'gatsby-plugin-algolia',
+        options: {
+          appId: process.env.ALGOLIA_APP_ID,
+          apiKey: process.env.ALGOLIA_API_KEY,
+          indexName: process.env.ALGOLIA_INDEX_NAME,
+          queries: [
+            {
+              query: `
+            {
+              allMdx(filter: {
+                frontmatter: {
+                  slug: {ne: null},
+                  publish: {ne: false}
+                }
+              }) {
+                edges {
+                  node {
+                    frontmatter {
+                      slug
+                      title
+                      seo_title
+                      description
+                      images
+                    }
+                    rawBody
+                  }
+                }
+              }
+            }
+          `,
+              transformer: ({ data }) =>
+                data.allMdx.edges.reduce((records, { node }) => {
+                  const {
+                    slug,
+                    title,
+                    seo_title: alt,
+                    description,
+                  } = node.frontmatter;
+
+                  const base = { slug, title, alt, description };
+                  const chunks = node.rawBody.split('\n\n');
+
+                  return [
+                    ...records,
+                    ...chunks.map((text, index) => ({
+                      ...base,
+                      objectID: `${slug}-${index}`,
+                      text,
+                    })),
+                  ];
+                }, []),
+            },
+          ],
+        },
+      },
+    ]
+  : [];
+
 module.exports = {
   siteMetadata: {
     title: `Data ∩ Product`,
@@ -9,7 +73,7 @@ module.exports = {
     author: {
       name: 'Bradley Gibbs',
       minibio: `
-        Bradley is a product consultant who specializes in machine learning products and services.
+        I am a product developer, specializing in machine learning products and services.
       `,
     },
     organization: {
@@ -121,6 +185,7 @@ module.exports = {
         ],
       },
     },
+    ...buildAlgoliaSearchIndex,
     {
       resolve: `gatsby-plugin-segment-js`,
       options: {

@@ -6,6 +6,7 @@ import { colors } from "gatsby-theme-apollo-core";
 import breakpoints from '../utils/breakpoints';
 import Burger from './Burger';
 import NavbarBodyMobile from './NavbarBodyMobile';
+import Search from './Search';
 
 const NavbarContainer = styled.nav({
   position: 'sticky',
@@ -103,18 +104,14 @@ const NavbarBurger = styled.div({
   margin: '0 0 0 auto',
   zIndex: 1000,
   boxSizing: 'border-box',
-})
-
-
-
-
+});
 
 const topLevelNav = [
   {
     href: "/blog/",
     label: "Blog",
   },
-]
+];
 
 const Header = () => {
 
@@ -144,11 +141,14 @@ const Header = () => {
               {label}
             </NavbarItem>
           ))}
+         
         </NavbarMenu>
         <NavbarBurger className='navbar-burger'>
           <Burger open={open} setOpen={setOpen} />
         </NavbarBurger>
+
       </NavbarBody>
+      
       <NavbarBodyMobile className='navbar-body-mobile' open={open} setOpen={setOpen} />
     </NavbarContainer>
   )

@@ -9,4 +9,6 @@ exports.colors = {
   tertiary: spaceKitColors.yellow.base,
   black: spaceKitColors.black.base,
   white: spaceKitColors.white,
+  darkest: spaceKitColors.darkest,
+  lightest: spaceKitColors.lightest,
 };
