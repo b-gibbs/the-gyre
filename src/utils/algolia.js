@@ -1,9 +1,9 @@
 const pageQuery = `{
-  posts: allFile(filter: {absolutePath: {regex: "/pages/"}}) {
+  pages: allFile(filter: {absolutePath: {regex: "/pages/"}}) {
     nodes {
       id
       childMdx {
-        body
+        rawBody
         frontmatter {
           slug
           title
@@ -15,45 +15,47 @@ const pageQuery = `{
 }`
 
 const postQuery = `{
-  posts: allFile(
-    filter: { relativePath: { glob: "posts/**/*.{md,mdx}" } }
-  ) {
-    nodes {
-      id
-      childMdx {
+  posts: allMdx(filter: {frontmatter: {slug: {ne: null}}}) {
+    edges {
+      node {
         frontmatter {
-          publish
-          title
-          description
           slug
+          title
+          seo_title
+          description
           images
-          category
-          tag
         }
+        rawBody
       }
     }
   }
 }`
 
-const flatten = arr =>
-  arr.map(({ node: { frontmatter, ...rest } }) => ({
-    ...frontmatter,
-    ...rest,
-  }))
-const settings = { attributesToSnippet: [`excerpt:20`] }
-
 const queries = [
   {
-    query: pageQuery,
-    transformer: ({ data }) => flatten(data.pages.edges),
-    indexName: `Pages`,
-    settings,
-  },
-  {
     query: postQuery,
-    transformer: ({ data }) => flatten(data.posts.edges),
-    indexName: `Posts`,
-    settings,
+    transformer: ({ data }) =>
+      data.posts.edges.reduce((records, { node }) => {
+        const {
+          slug,
+          title,
+          seo_title: alt,
+          description,
+        } = node.frontmatter;
+
+        const base = { slug, title, alt, description };
+        const chunks = node.rawBody.split('\n\n');
+
+        return [
+          ...records,
+          ...chunks.map((text, index) => ({
+            ...base,
+            objectID: `${slug}-${index}`,
+            text,
+          })),
+        ];
+      },
+    []),
   },
 ]
 

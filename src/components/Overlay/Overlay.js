@@ -6,7 +6,7 @@ import { colors } from 'gatsby-theme-apollo-core';
 
 const Overlay = styled('div')({
   alignItems: 'center',
-  background: colors.lightest,
+  background: colors.white,
   display: 'flex',
   height: '100vh',
   justifyContent: 'center',

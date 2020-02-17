@@ -27,7 +27,7 @@ const NavbarBody = styled.div({
   display: 'flex',
   alignItems: 'center',
   height: '80px',
-  width: '100%',
+  width: '70%',
   padding: '0 15px',
   margin: '0 auto',
 })
@@ -141,14 +141,13 @@ const Header = () => {
               {label}
             </NavbarItem>
           ))}
-         
         </NavbarMenu>
-        <NavbarBurger className='navbar-burger'>
-          <Burger open={open} setOpen={setOpen} />
-        </NavbarBurger>
-
+        
       </NavbarBody>
-      
+      <Search />
+      <NavbarBurger className='navbar-burger'>
+        <Burger open={open} setOpen={setOpen} />
+      </NavbarBurger>
       <NavbarBodyMobile className='navbar-body-mobile' open={open} setOpen={setOpen} />
     </NavbarContainer>
   )

@@ -8,57 +8,57 @@ import {
   InstantSearch,
   Highlight,
 } from 'react-instantsearch-dom';
-import { MdSearch } from 'react-icons/md';
+import { FaSearch } from 'react-icons/fa';
 import Overlay from './Overlay/Overlay';
 import { colors } from 'gatsby-theme-apollo-core';
-import breakpoints from '../utils/breakpoints';
 
-const client = algoliasearch(
-  process.env.GATSBY_ALGOLIA_APP_ID,
-  process.env.GATSBY_ALGOLIA_SEARCH_KEY
-);
+const client = algoliasearch('P3ZGBS5QDA',
+  '60a0d7250d091fcf7079b9295448a4d4');
 
-const SearchArea = styled('div')({
-  height: '100vh',
-  marginTop: 0,
-  overflowY: 'scroll',
-  padding: '3rem 5%',
-  width: '100%',
-});
 
-const List = styled('ul')({
-  listStyle: 'none',
-  margin: '0 auto',
-  maxWidth: '650px',
-  padding: 0,
-});
+const SearchArea = styled('div')`
+  height: 100vh;
+  margin-top: 0;
+  overflow-y: scroll;
+  padding: 3rem 5%;
+  width: 100%;
+`;
 
-const Result = styled('li')({
-  marginTop: '2rem',
-});
+const List = styled('ul')`
+  list-style: none;
+  margin: 0 auto;
+  max-width: 650px;
+  padding: 0;
+`;
 
-const Heading = styled('h2')({
-  fontSize: '1.25rem',
-  fontWeight: 600,
+const Result = styled('li')`
+  margin-top: 2rem;
+`;
 
-  'a': {
-    color: colors.heading,
-    textDecoration: 'none',
-    
-    ':active, :hover, :focus': {
-      color: colors.primaryLight,
-    },
-  },
-});
+const Heading = styled('h2')`
+  font-size: 1.25rem;
+  font-weight: 600;
 
-const Link = styled('a')({
-  display: 'inline-block',
-  fontSize: '0.75rem',
-  letterSpacing: '0.1em',
-  marginTop: '0.5rem',
-  textDecoration: 'none',
-  textTransform: 'uppercase',
-});
+  a {
+    color: ${colors.heading};
+    text-decoration: none;
+
+    :active,
+    :focus,
+    :hover {
+      color: ${colors.lightest};
+    }
+  }
+`;
+
+const Link = styled('a')`
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+`;
 
 const Hits = connectHits(({ hits }) => (
   <List>
@@ -78,66 +78,63 @@ const Hits = connectHits(({ hits }) => (
   </List>
 ));
 
-const OpenSearch = styled('a')({
-  alignSelf: 'center',
-  border: '2px solid transparent',
-  color: colors.heading,
-  height: '100%',
-  margin: 0,
-  padding: '0 0.625rem',
-  width: '2.375rem',
+const OpenSearch = styled('a')`
+  align-self: center;
+  border: 2px solid transparent;
+  color: ${colors.text1};
+  height: 100%;
+  margin: 0;
+  padding: 0 0.625rem;
+  width: 2.375rem;
 
-  ':active, :focus, :hover': {
-    backgroundColor: 'transparent',
-    color: colors.primary,
-  },
+  :active,
+  :focus,
+  :hover {
+    background-color: transparent;
+    color: ${colors.primary};
+  }
 
-  ':focus': {
-    border: '2px solid',
-    borderColor: colors.text1,
-    borderRadius: 0,
-  },
+  :focus {
+    border: 2px solid ${colors.primary};
+    border-radius: 0;
+  }
 
-  [breakpoints.sm]: {
-    width: '2.5rem',
-  },
-});
+`;
 
-const Icon = styled(MdSearch)({
-  height: '100%',
-  margin: 0,
-  position: 'relative',
-  top: '-0.125em',
-});
+const Icon = styled(FaSearch)`
+  height: 100%;
+  margin: 0;
+  position: relative;
+  top: -0.125em;
+`;
 
-const Label = styled('label')({
-  diplay: 'block',
-  margin: '0 auto',
-  maxWidth: '650px',
-});
+const Label = styled('label')`
+  display: block;
+  margin: 0 auto;
+  max-width: 650px;
+`;
 
-const Input = styled('input')({
-  border: '2px solid',
-  borderColor: colors.text4,
-  borderRadius: '4px',
-  display: 'block',
-  fontSize: '1.25rem',
-  marginTop: 0,
-  padding: '0.5rem 0.75rem',
-  width: '100%',
-});
+const Input = styled('input')`
+  border: 2px solid ${colors.text3};
+  border-radius: 4px;
+  display: block;
+  font-size: 1.25rem;
+  margin-top: 0;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+`;
 
-const SearchCredit = styled('p')({
-  color: colors.text4,
-  fontSize: '0.75rem',
-  margin: '0.25rem auto 0',
-  maxWidth: '650px',
-  textAlign: 'right',
+const SearchCredit = styled('p')`
+  color: ${colors.text3};
+  font-size: 0.75rem;
+  margin: 0.25rem auto 0;
+  max-width: 650px;
+  text-align: right;
 
-  'a': {
-    color: 'inherit',
-  },
-});
+  a {
+    color: inherit;
+  }
+`;
 
 const Search = connectSearchBox(({ currentRefinement, refine, setActive }) => (
   <form noValidate action="" role="search">
@@ -164,12 +161,12 @@ const Search = connectSearchBox(({ currentRefinement, refine, setActive }) => (
   </form>
 ));
 
-const SearchContainer = styled('div')({
-  display: 'flex',
-  alignItems: 'flex-start',
-  marginLeft: 'auto',
-  marginTop: 0,
-})
+const SearchContainer = styled('div')`
+  display: flex;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-top: 0;
+`;
 
 export default () => {
   const [active, setActive] = useState(false);
@@ -177,7 +174,7 @@ export default () => {
   return (
     <InstantSearch
       searchClient={client}
-      indexName="lengstorf-blog"
+      indexName="the-gyre"
       root={{ Root: SearchContainer }}
     >
       <Configure distinct={1} />
