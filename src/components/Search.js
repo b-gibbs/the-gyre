@@ -12,9 +12,10 @@ import { FaSearch } from 'react-icons/fa';
 import Overlay from './Overlay/Overlay';
 import { colors } from 'gatsby-theme-apollo-core';
 
-const client = algoliasearch('P3ZGBS5QDA',
-  '60a0d7250d091fcf7079b9295448a4d4');
-
+const client = algoliasearch(
+  process.env.GATSBY_ALGOLIA_APP_ID,
+  process.env.GATSBY_ALGOLIA_API_KEY
+);
 
 const SearchArea = styled('div')`
   height: 100vh;
@@ -31,48 +32,78 @@ const List = styled('ul')`
   padding: 0;
 `;
 
-const Result = styled('li')`
-  margin-top: 2rem;
-`;
-
-const Heading = styled('h2')`
-  font-size: 1.25rem;
-  font-weight: 600;
-
-  a {
-    color: ${colors.heading};
-    text-decoration: none;
-
-    :active,
-    :focus,
-    :hover {
-      color: ${colors.lightest};
+const Result = styled('li')({
+  padding: 0,
+  margin: 0,
+  height: '100%',
+  borderRadius: 4,
+  color: colors.text1,
+  textDecoration: 'none',
+  backgroundColor: 'transparent',
+  transitionProperty: 'color, background-color',
+  transitionDuration: '150ms',
+  transitionTimingFunction: 'ease-in-out',
+  '@media (hover: hover)': {
+    ':hover': {
+      color: 'white',
+      backgroundColor: colors.highlight3,
     }
   }
-`;
+});
 
-const Link = styled('a')`
-  display: inline-block;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  margin-top: 0.5rem;
-  text-decoration: none;
-  text-transform: uppercase;
-`;
+const Link = styled('a')({
+  fontSize: '0.75rem',
+  textDecoration: 'none',
+});
+
+const ResultWrapper = styled('div')({
+  textDecoration: 'none',
+  'mark': {
+    color: colors.secondary,
+    backgroundColor: 'transparent',
+  }
+});
+
+const Description = styled('p')({
+  paddingLeft: '1rem',
+  color: colors.text3,
+})
+
+const Heading = styled('h2')({
+  fontSize: '1.25rem',
+  fontWeight: 500,
+  paddingTop: '1rem',
+  paddingLeft: '1rem',
+  color: colors.text1,
+
+  a: {
+    textDecoration: 'none',
+    color: colors.text1,
+  },
+});
+
+const StyledHR = styled('hr')({
+  borderColor: colors.divider,
+  margin: '0 1rem',
+  padding: 0,
+});
 
 const Hits = connectHits(({ hits }) => (
   <List>
     {hits.map(hit => (
       <Result key={hit.objectID}>
-        <Heading>
-          <a href={`/${hit.slug}`}>
-            <Highlight attribute="title" hit={hit} tagName="mark" />
-          </a>
-        </Heading>
-        <p>
-          <Highlight attribute="description" hit={hit} tagName="mark" />
-        </p>
-        <Link href={`/${hit.slug}`}>Read this post &rsaquo;</Link>
+        <Link href={`https://thegyre.io/${hit.slug}`}>
+          <ResultWrapper> 
+            <Heading>
+                <Highlight attribute="title" hit={hit} tagName="mark" />
+            </Heading>
+            <Description>
+              <Highlight attribute="description" hit={hit} tagName="mark" />
+            </Description>
+            
+          </ResultWrapper>
+        </Link>
+        <StyledHR />
       </Result>
     ))}
   </List>
@@ -91,14 +122,17 @@ const OpenSearch = styled('a')`
   :focus,
   :hover {
     background-color: transparent;
-    color: ${colors.primary};
+    color: ${colors.primaryDark};
   }
 
   :focus {
-    border: 2px solid ${colors.primary};
+    border: 2px solid ${colors.darkest};
     border-radius: 0;
   }
 
+  @media (max-width: 576px) {
+    width: 2.5rem;
+  }
 `;
 
 const Icon = styled(FaSearch)`
@@ -139,7 +173,7 @@ const SearchCredit = styled('p')`
 const Search = connectSearchBox(({ currentRefinement, refine, setActive }) => (
   <form noValidate action="" role="search">
     <Label htmlFor="search">
-      <span>Search the Blog</span>
+      <span>Search Data ∩ Product</span>
       <Input
         type="search"
         id="search"
@@ -186,7 +220,7 @@ export default () => {
           setActive(true);
         }}
       >
-        <Icon title="Search the blog" />
+        <Icon title="Search..." />
       </OpenSearch>
 
       <Overlay hidePopover={() => setActive(false)} visible={active}>

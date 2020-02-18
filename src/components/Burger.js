@@ -42,7 +42,7 @@ const BurgerCloseIcon = styled.div(props => ({
   transform: 'rotate(0deg)',
   visibility: 'hidden',
   opacity: 0,
-  [breakpoints.nm]: {
+  [breakpoints.md]: {
     visibility: 'visible',
     opacity: 1,
   },

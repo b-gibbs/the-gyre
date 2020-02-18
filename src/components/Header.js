@@ -27,9 +27,8 @@ const NavbarBody = styled.div({
   display: 'flex',
   alignItems: 'center',
   height: '80px',
-  width: '70%',
   padding: '0 15px',
-  margin: '0 auto',
+  margin: '0 auto 0 1rem',
 })
 
 const LogoLink = styled(Link)({
@@ -47,7 +46,7 @@ const NavbarMenu = styled.nav({
   display: 'flex',
   zIndex: 999,
   paddingLeft: '20px',
-  [breakpoints.nm]: {
+  [breakpoints.md]: {
     visibility: 'hidden',
     opacity: 0,
     display: 'none',
@@ -98,10 +97,15 @@ const NavbarA = styled('a')({
   },
 })
 
+const NavbarSearchMobile = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
 
 const NavbarBurger = styled.div({
   display: 'flex',
-  margin: '0 0 0 auto',
+  margin: '0 0 0 2rem',
   zIndex: 1000,
   boxSizing: 'border-box',
 });
@@ -144,10 +148,12 @@ const Header = () => {
         </NavbarMenu>
         
       </NavbarBody>
-      <Search />
-      <NavbarBurger className='navbar-burger'>
-        <Burger open={open} setOpen={setOpen} />
-      </NavbarBurger>
+      <NavbarSearchMobile>
+        <Search />
+        <NavbarBurger className='navbar-burger'>
+          <Burger open={open} setOpen={setOpen} />
+        </NavbarBurger>
+      </NavbarSearchMobile>
       <NavbarBodyMobile className='navbar-body-mobile' open={open} setOpen={setOpen} />
     </NavbarContainer>
   )

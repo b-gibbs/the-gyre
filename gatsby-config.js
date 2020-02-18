@@ -57,9 +57,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-algolia`,
       options: {
-        appId: process.env.ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_API_KEY,
-        indexName: process.env.ALGOLIA_INDEX_NAME,
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.GATSBY_ALGOLIA_API_KEY,
+        indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
         queries,
         chunkSize: 10000, // default: 1000
       },
@@ -141,12 +141,12 @@ module.exports = {
         // your segment write key for your production environment
         // when process.env.NODE_ENV === 'production'
         // required; non-empty string
-        prodKey: `0TAk10vR8PfTF85gWdE7qf4nT2l3eYt1`,
+        prodKey: process.env.GATSBY_SEGMENT_PRODUCTION_WRITE_KEY,
   
         // if you have a development env for your segment account, paste that key here
         // when process.env.NODE_ENV === 'development'
         // optional; non-empty string
-        devKey: `SEGMENT_DEV_WRITE_KEY`,
+        devKey: process.env.GATSBY_SEGMENT_DEV_WRITE_KEY,
   
         // boolean (defaults to false) on whether you want
         // to include analytics.page() automatically
@@ -178,7 +178,7 @@ module.exports = {
       resolve: `gatsby-plugin-amplitude-analytics`,
       options: {
         // Specify the API key for your Amplitude Project (required)
-        apiKey: "6c3a99479b1be3358ee13143cb83a670",
+        apiKey: process.env.GATSBY_AMPLITUDE_API_KEY,
         // Puts tracking script in the head instead of the body (optional)
         head: false,
         // Prevents loading Amplitude and logging events if visitors have "Do Not Track" enabled (optional)
