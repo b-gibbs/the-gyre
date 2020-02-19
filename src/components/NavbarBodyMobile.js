@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
 import { rgba } from 'polished';
+import Search from './Search';
+import breakpoints from '../utils/breakpoints';
 
 const NavbarBodyMobile = ({ open, ...props }) => {
   
@@ -13,19 +15,18 @@ const NavbarBodyMobile = ({ open, ...props }) => {
     <StyledBody open={open} aria-hidden={!isHidden} {...props}>
       <NavbarMenuMobile>
         <StyledLink to='/'open={open}>Home</StyledLink>
-        <StyledLink to='/data'open={open}>Data Science</StyledLink>
-        <StyledLink to='/product'open={open}>Product Management</StyledLink>
-        <StyledLink to='/blog'open={open}>Blog</StyledLink>
+        <StyledLinkA href='https://thegyre.io/data'open={open}>Data Science</StyledLinkA>
+        <StyledLinkA href='https://thegyre.io/product'open={open}>Product Management</StyledLinkA>
+        <StyledLink to='/blog' open={open}>Blog</StyledLink>
+        <Search />
       </NavbarMenuMobile>
     </StyledBody>
   )
 }
 
-NavbarBodyMobile.propTypes = {
-  open: PropTypes.bool.isRequired,
-}
 
 export default NavbarBodyMobile;
+
 
 const StyledBody = styled.div(props => ({
   backgroundColor: '#fff',
@@ -36,28 +37,22 @@ const StyledBody = styled.div(props => ({
   flexDirection: 'column',
   position: 'absolute',
   top: '17px',
-  left: '0px',
-  right: '0px',
+  right: '8px',
+  width: '300px',
+  marginLeft: 'auto',
   paddingTop: '10px',
   minHeight: '200px',
   minWidth: '250px',
   transition: 'all 0.25s ease-out',
-  '@media (min-width: 576px)': {
-    margin: 'auto',
+  opacity: props.open ? 1 : 0,
+  visibility: props.open ? 'visible' : 'hidden',
+  [breakpoints.sm]: {
+    maxWidth: '546px',
+  },
+  [breakpoints.md]: {
     maxWidth: '580px',
   },
-  '@media (min-width: 0)': {
-    display: 'flex',
-    opacity: props.open ? 1 : 0,
-    visibility: props.open ? 'visible' : 'hidden',
-    margin: '0 20px',
-  },
-  '@media (min-width: 620px)': {
-    opacity: 0,
-    visibility: 'hidden',
-  }
-})
-)
+}));
 
 const NavbarMenuMobile = styled.div({
   display: 'flex',
@@ -65,7 +60,7 @@ const NavbarMenuMobile = styled.div({
   color: colors.text2,
   fontSize: '16px',
   fontWeight: 400,
-})
+});
  
 const StyledLink = styled(Link)(props => ({
   backgroundColor: rgba(0, 0, 0, 0, 0),
@@ -83,5 +78,22 @@ const StyledLink = styled(Link)(props => ({
   '&:hover': {
     color: colors.primary,
   }
-})
-)
+}));
+
+const StyledLinkA = styled('a')(props => ({
+  backgroundColor: rgba(0, 0, 0, 0, 0),
+  color: colors.text2,
+  display: 'block',
+  fontSize: '16px',
+  fontWeight: 400,
+  lineHeight: '30px',
+  padding: '10px 20px',
+  textDecorationColor: colors.text2,
+  textDecorationLine: 'none',
+  textDecorationStyle: 'solid',
+  transition: 'all 0.25s ease-out',
+  visibility: props.open ? 'visible' : 'hidden',
+  '&:hover': {
+    color: colors.primary,
+  }
+}));

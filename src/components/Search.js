@@ -11,6 +11,8 @@ import {
 import { FaSearch } from 'react-icons/fa';
 import Overlay from './Overlay/Overlay';
 import { colors } from 'gatsby-theme-apollo-core';
+import breakpoints from '../utils/breakpoints';
+import { rgba } from 'polished';
 
 const client = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
@@ -109,38 +111,55 @@ const Hits = connectHits(({ hits }) => (
   </List>
 ));
 
-const OpenSearch = styled('a')`
-  align-self: center;
-  border: 2px solid transparent;
-  color: ${colors.text1};
-  height: 100%;
-  margin: 0;
-  padding: 0 0.625rem;
-  width: 2.375rem;
 
-  :active,
-  :focus,
-  :hover {
-    background-color: transparent;
-    color: ${colors.primaryDark};
+const OpenSearch = styled('a')({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'left',
+  color: colors.text1,
+  lineHeight: '29px', 
+  fontSize: '20px',
+  fontWeight: 300,
+  textDecoration: 'none',
+
+  [breakpoints.md]: {
+    backgroundColor: rgba(0, 0, 0, 0, 0),
+    color: colors.text2,
+
+    fontSize: '16px',
+    fontWeight: 400,
+    lineHeight: '30px',
+    padding: '10px 20px',
+    marginBottom: '10px',
+    textDecorationColor: colors.text2,
+    textDecorationLine: 'none',
+    textDecorationStyle: 'solid',
+    transition: 'all 0.25s ease-out',
+    '&:hover': {
+      color: colors.primary,
+    }
   }
+});
 
-  :focus {
-    border: 2px solid ${colors.darkest};
-    border-radius: 0;
+const SearchIcon = styled(FaSearch)({
+  height: '60%',
+  position: 'relative',
+  margin: 0,
+  [breakpoints.md]: {
+    visibility: 'hidden',
+    opacity: 0,
   }
+});
 
-  @media (max-width: 576px) {
-    width: 2.5rem;
+const SearchText = styled('p')({
+  paddingRight: '6px',
+  fontSize: '20px',
+  margin: 0,
+  [breakpoints.md]: {
+    fontSize: '16px',
   }
-`;
-
-const Icon = styled(FaSearch)`
-  height: 100%;
-  margin: 0;
-  position: relative;
-  top: -0.125em;
-`;
+});
 
 const Label = styled('label')`
   display: block;
@@ -195,12 +214,7 @@ const Search = connectSearchBox(({ currentRefinement, refine, setActive }) => (
   </form>
 ));
 
-const SearchContainer = styled('div')`
-  display: flex;
-  align-items: flex-start;
-  margin-left: auto;
-  margin-top: 0;
-`;
+
 
 export default () => {
   const [active, setActive] = useState(false);
@@ -209,19 +223,20 @@ export default () => {
     <InstantSearch
       searchClient={client}
       indexName="the-gyre"
-      root={{ Root: SearchContainer }}
     >
       <Configure distinct={1} />
+        <OpenSearch
+          href="/search"
+          onClick={event => {
+            event.preventDefault();
+            setActive(true);
+          }}
+        >
+          <SearchText>Search</SearchText>
+          <SearchIcon />
+        </OpenSearch>
 
-      <OpenSearch
-        href="/search"
-        onClick={event => {
-          event.preventDefault();
-          setActive(true);
-        }}
-      >
-        <Icon title="Search..." />
-      </OpenSearch>
+          
 
       <Overlay hidePopover={() => setActive(false)} visible={active}>
         {active && (

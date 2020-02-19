@@ -15,7 +15,7 @@ const NavbarContainer = styled.nav({
   alignItems: 'center',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
-  backgroundColor: [colors.background],
+  backgroundColor: colors.background,
   zIndex: 990,
   height: '80px',
   width: '100%',
@@ -26,9 +26,14 @@ const NavbarContainer = styled.nav({
 const NavbarBody = styled.div({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
   height: '80px',
   padding: '0 15px',
-  margin: '0 auto 0 1rem',
+  margin: '0 0 0 1rem',
+  [breakpoints.md]: {
+    width: '30%',
+  }
 })
 
 const LogoLink = styled(Link)({
@@ -44,6 +49,9 @@ const Logo = styled.img({
 
 const NavbarMenu = styled.nav({
   display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
   zIndex: 999,
   paddingLeft: '20px',
   [breakpoints.md]: {
@@ -53,17 +61,21 @@ const NavbarMenu = styled.nav({
   },
 })
 
+const Navleft = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
+
 const NavbarItem = styled(Link)({
   display: 'flex',
   alignItems: 'center',
   fontSize: '20px',
   fontWeight: 300,
-  color: [colors.text1],
+  color: colors.text1,
   textDecoration: 'none',
   border: '2px solid transparent',
-  borderRight: 'none',
-  borderLeft: 'none',
-  marginRight: '16px',
+  marginRight: 'auto',
   transition: 'all 250ms ease-out',
   ':hover': {
     opacity: colors.hoverOpacity,
@@ -80,11 +92,8 @@ const NavbarA = styled('a')({
   alignItems: 'center',
   fontSize: '20px',
   fontWeight: 300,
-  color: [colors.text1],
+  color: colors.text1,
   textDecoration: 'none',
-  border: '2px solid transparent',
-  borderRight: 'none',
-  borderLeft: 'none',
   marginRight: '16px',
   transition: 'all 250ms ease-out',
   ':hover': {
@@ -124,6 +133,7 @@ const Header = () => {
   return (
     <NavbarContainer className='navbar-container' role="banner" >
       <NavbarBody className='navbar-body'>
+        
         <LogoLink to="/" className='navbar-logo'>
           <Logo
             src={logo}
@@ -132,25 +142,28 @@ const Header = () => {
             style={{ maxWidth: "180px" }}
           />
         </LogoLink>
-        <NavbarMenu className='navbar-menu'>
-          <NavbarA href='https://thegyre.io/data/'>Data Science</NavbarA>
-          <NavbarA href='https://thegyre.io/product/'>Product Management</NavbarA>
-          {topLevelNav.map(({ href, label, extraClass = "" }) => (
-            <NavbarItem
-              key={label}
-              to={href}
-              className={`${extraClass} text-sharp`}
-              activeClassName="active"
-            >
-              {label}
-            </NavbarItem>
-          ))}
-        </NavbarMenu>
         
+        <NavbarMenu className='navbar-menu'>
+          <Navleft className='nav-left'>
+            <NavbarA href='https://thegyre.io/data/'>Data Science</NavbarA>
+            <NavbarA href='https://thegyre.io/product/'>Product Management</NavbarA>
+            {topLevelNav.map(({ href, label, extraClass = "" }) => (
+              <NavbarItem
+                key={label}
+                to={href}
+                className={`${extraClass} text-sharp`}
+                activeClassName="active"
+              >
+                {label}
+              </NavbarItem>
+            ))}
+          </Navleft>
+          <Search />
+        </NavbarMenu>
+       
       </NavbarBody>
       <NavbarSearchMobile>
-        <Search />
-        <NavbarBurger className='navbar-burger'>
+        <NavbarBurger> 
           <Burger open={open} setOpen={setOpen} />
         </NavbarBurger>
       </NavbarSearchMobile>

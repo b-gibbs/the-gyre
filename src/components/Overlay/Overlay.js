@@ -8,6 +8,7 @@ const Overlay = styled('div')({
   alignItems: 'center',
   background: colors.white,
   display: 'flex',
+  flexDirection: 'column',
   height: '100vh',
   justifyContent: 'center',
   top: 0,
@@ -74,8 +75,11 @@ export default ({ children, hidePopover, visible, onEntered = () => {} }) => {
           style={transitionStyles[state]}
           className={hidden ? 'hidden' : ''}
         >
-          {children}
-          <CloseButton onClick={hidePopover}>close</CloseButton>
+          <CloseButton onClick={hidePopover}>
+            <span />
+            <span />
+          </CloseButton>
+          {children}          
         </Overlay>
       )}
     </Transition>
