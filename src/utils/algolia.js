@@ -1,19 +1,3 @@
-const pageQuery = `{
-  pages: allFile(filter: {absolutePath: {regex: "/pages/"}}) {
-    nodes {
-      id
-      childMdx {
-        rawBody
-        frontmatter {
-          slug
-          title
-          description
-        }
-      }
-    }
-  }
-}`
-
 const postQuery = `{
   posts: allMdx(filter: {frontmatter: {slug: {ne: null}}}) {
     edges {
