@@ -4,6 +4,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Header from './Header';
 import Main from './Main';
+import Footer from './Footer';
 import config from '../../data/SiteConfig';
 
 export default ({ children, title, className = '' }) => [
@@ -34,4 +35,5 @@ export default ({ children, title, className = '' }) => [
   <Main key="app-main" className={className}>
     {children}
   </Main>,
+  <Footer />
 ];

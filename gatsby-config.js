@@ -112,7 +112,13 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `content`,
-        name: 'content',
+        name: `${__dirname}/content`,
+      },
+    },
+    {
+      resolve: `gatsby-transformer-yaml`,
+      options: {
+        typeName: `Resource`
       },
     },
     {

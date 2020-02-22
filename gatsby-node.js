@@ -1,5 +1,6 @@
 const path = require('path');
 const { template, chunk } = require('lodash');
+const fs = require('fs');
 
 const getUnique = (field, posts) =>
   posts.reduce((uniques, post) => {
@@ -75,6 +76,37 @@ exports.onCreateBabelConfig = ({ actions }) => {
     name: '@babel/plugin-proposal-export-default-from',
   });
 };
+
+exports.onPreBootstrap = ({ reporter }) => {
+  const contentPath = 'content/resources';
+
+  if (!fs.existsSync(contentPath)) {
+    reporter.info(`creating the ${contentPath} directory`)
+    fs.mkdirSync(contentPath);
+  }
+}
+
+/* Define the Resource type */
+exports.sourceNodes = ({ actions }) => {
+  actions.createTypes(`
+    type Resource implements Node @dontInfer {
+      id: ID!
+      title: String!
+      subtitle: String
+      priority: Int!
+      category: String!
+      tags: [String!]
+      author: String!
+      pubYear: String! @proxy(from:"pub_year")
+      type: String!
+      image: String!
+      url: String!
+      description: String!
+    }
+  `)
+};
+
+
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;

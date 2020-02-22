@@ -1,0 +1,71 @@
+---
+title: About
+---
+import Layout from '../components/Layout.js';
+import PageLayout from '../components/PageLayout.js';
+import HeroAbout from '../components/HeroAbout.js';
+import { graphql } from 'gatsby';
+import breakpoints from '../utils/breakpoints.js';
+import GatsbyImage from 'gatsby-image';
+import { colors } from 'gatsby-theme-apollo-core';
+import Image from '../components/Image';
+
+
+export default ({ children }) => (
+  <Layout>
+    <PageLayout>
+      <HeroAbout />
+      {children}
+    </PageLayout>
+  </Layout>
+);
+
+<div className='photo-credit' style={{
+  margin: '0 auto',
+  width: '700px',
+  display: 'flex',
+  flexDirection: 'columns',
+}}>
+
+  <p style={{
+    fontSize: '12px',
+    color: colors.text4,
+    margin: '0 auto 10px 10px',
+  }}>
+  Viking Gyre, a spiral of icebergs in the Arctic North Atlantic.</p>
+  
+  <p style={{
+    fontSize: '12px',
+    color: colors.text4,
+    margin: '0 10px 10px auto',
+  }}>
+  Credit: Nia Power via National Geographic</p>
+</div>
+
+<div style={{
+  maxWidth: '1000px',
+  margin: '20px auto',
+}}>
+
+## About Gyres
+The url for this site (the gyre, which is pronounced with a soft 'g', as in giraffe or gyrate) is a nod to The Second Coming, a poem by William Butler Yeats. The poems begins:  
+</div>
+
+<div style={{
+  maxWidth: '400px',
+  margin: '0 auto',
+  padding: '5px auto 5px 10px',
+  backgroundColor: colors.background,
+  borderRadius: '5px',
+  fontStyle: 'italic',
+}}>
+Turning and turning in the widening gyre <br/>The falcon cannot hear the falconer; <br/>Things fall apart; the centre cannot hold; <br/>Mere anarchy is loosed upon the world...
+</div>
+
+<div style={{
+  maxWidth: '1000px',
+  margin: '20px auto',
+  fontSize: '18px',
+}}>
+Political and social norms have cycled throughout time, being pulled first in one direction and then another. Increasingly, technology and the speed and reach of communications have exacerbated these cycles, pulling us further in different directions, accelerating the spin of the gyre. 
+</div>
