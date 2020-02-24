@@ -122,8 +122,10 @@ const OpenSearch = styled('a')({
   fontSize: '20px',
   fontWeight: 300,
   textDecoration: 'none',
+  margin: 0,
 
-  [breakpoints.md]: {
+
+  [breakpoints.lg]: {
     backgroundColor: rgba(0, 0, 0, 0, 0),
     color: colors.text2,
 
@@ -131,7 +133,6 @@ const OpenSearch = styled('a')({
     fontWeight: 400,
     lineHeight: '30px',
     padding: '10px 20px',
-    marginBottom: '10px',
     textDecorationColor: colors.text2,
     textDecorationLine: 'none',
     textDecorationStyle: 'solid',
@@ -156,7 +157,14 @@ const SearchText = styled('p')({
   paddingRight: '6px',
   fontSize: '20px',
   margin: 0,
+  [breakpoints.lg]: {
+    visibility: 'hidden',
+    opacity: 0,
+    fontSize: 0,
+  },
   [breakpoints.md]: {
+    visibility: 'visible',
+    opacity: 1,
     fontSize: '16px',
   }
 });
@@ -231,8 +239,8 @@ export default () => {
             event.preventDefault();
             setActive(true);
           }}
-        >
-          <SearchText>Search</SearchText>
+      >
+        <SearchText>Search</SearchText>
           <SearchIcon />
         </OpenSearch>
 

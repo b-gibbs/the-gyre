@@ -27,20 +27,12 @@ module.exports = {
     },
     categories: [
       {
-        slug: 'career',
-        name: 'Career',
+        slug: 'product',
+        name: 'Product',
       },
       {
-        slug: 'machine-learning',
-        name: 'Machine Learning',
-      },
-      {
-        slug: 'deep-learning',
-        name: 'Deep Learning',
-      },
-      {
-        slug: 'lifecycle',
-        name: 'Lifecycle',
+        slug: 'data',
+        name: 'Data',
       },
     ],
   },
@@ -113,12 +105,6 @@ module.exports = {
       options: {
         path: `content`,
         name: `${__dirname}/content`,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-yaml`,
-      options: {
-        typeName: `Resource`
       },
     },
     {

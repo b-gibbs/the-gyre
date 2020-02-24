@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { transparentize } from 'polished';
 import BackgroundImage from 'gatsby-background-image';
 import breakpoints from '../utils/breakpoints';
-import colors from 'gatsby-theme-apollo-core';
 
 const HeroAbout = ({ className, ...props }) => (
   <StaticQuery

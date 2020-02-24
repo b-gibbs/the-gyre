@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
 import { rgba } from 'polished';
@@ -18,6 +17,7 @@ const NavbarBodyMobile = ({ open, ...props }) => {
         <StyledLinkA href='https://thegyre.io/data'open={open}>Data Science</StyledLinkA>
         <StyledLinkA href='https://thegyre.io/product'open={open}>Product Management</StyledLinkA>
         <StyledLink to='/blog' open={open}>Blog</StyledLink>
+        <StyledLink to='/resources' open={open}>Resources</StyledLink>
         <Search />
       </NavbarMenuMobile>
     </StyledBody>
@@ -40,7 +40,6 @@ const StyledBody = styled.div(props => ({
   right: '8px',
   width: '300px',
   marginLeft: 'auto',
-  paddingTop: '10px',
   minHeight: '200px',
   minWidth: '250px',
   transition: 'all 0.25s ease-out',
@@ -60,6 +59,7 @@ const NavbarMenuMobile = styled.div({
   color: colors.text2,
   fontSize: '16px',
   fontWeight: 400,
+  padding: '20px',
 });
  
 const StyledLink = styled(Link)(props => ({

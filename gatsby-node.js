@@ -57,6 +57,61 @@ const paginate = (
     });
   });
 
+const getUniqueResources = (field, resources) =>
+  resources.reduce((uniques, resource) => {
+    const values = resource.childMdx.frontmatter[field];
+
+    return uniques.concat(values.filter(val => !uniques.includes(val)));
+  }, []);
+
+const groupResourcesByUnique = (field, resources) => {
+  const uniqueValues = getUnique(field, resources);
+
+  return uniqueValues.reduce(
+    (grouped, unique) => ({
+      ...grouped,
+      [unique]: resources.filter(resource =>
+        resource.childMdx.frontmatter[field].includes(unique),
+      ),
+    }),
+    {},
+  );
+};
+
+// Add paginated blog preview pages. Here’s how it works:
+//
+// 1.  Use lodash-chunk to create posts in groups.
+// 2.  Finally, we create a new page for each post group.
+//
+// Adapted from https://github.com/pixelstew/gatsby-paginate
+const paginateResources = (
+  { pathTemplate, createPage, component, type, value, linkRoot = "resources" },
+  resources
+) =>
+  chunk(resources, 10).forEach((resourceGroup, index, allResourceGroups) => {
+    const isFirstPage = index === 0
+    const currentPage = index + 1
+    const totalPages = allResourceGroups.length
+    const getPath = template(pathTemplate)
+    const pagePath = getPath({ pageNumber: isFirstPage ? "" : currentPage })
+
+    createPage({
+      path: pagePath.replace("//", "/"),
+      component,
+      context: {
+        resourceGroup,
+        type,
+        value,
+        currentPage,
+        totalPages,
+        isFirstPage,
+        isLastPage: currentPage === totalPages,
+        linkBase: getPath({ pageNumber: "" }),
+        linkRoot,
+      },
+    })
+  })
+
 // This is a shortcut so MDX can import components without gross relative paths.
 // Example: import { Image } from '$components';
 exports.onCreateWebpackConfig = ({ actions }) => {
@@ -76,37 +131,6 @@ exports.onCreateBabelConfig = ({ actions }) => {
     name: '@babel/plugin-proposal-export-default-from',
   });
 };
-
-exports.onPreBootstrap = ({ reporter }) => {
-  const contentPath = 'content/resources';
-
-  if (!fs.existsSync(contentPath)) {
-    reporter.info(`creating the ${contentPath} directory`)
-    fs.mkdirSync(contentPath);
-  }
-}
-
-/* Define the Resource type */
-exports.sourceNodes = ({ actions }) => {
-  actions.createTypes(`
-    type Resource implements Node @dontInfer {
-      id: ID!
-      title: String!
-      subtitle: String
-      priority: Int!
-      category: String!
-      tags: [String!]
-      author: String!
-      pubYear: String! @proxy(from:"pub_year")
-      type: String!
-      image: String!
-      url: String!
-      description: String!
-    }
-  `)
-};
-
-
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;
@@ -128,6 +152,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               images
               category
               tag
+            }
+          }
+        }
+      }
+      resources: allFile(
+        filter: {relativePath: {glob: "resources/**/*.{md,mdx}"}}
+        sort: {fields: childMdx___frontmatter___priority, order: ASC }
+      ) {
+        nodes {
+          id
+          childMdx {
+            frontmatter {
+              title
+              subtitle
+              author
+              action
+              category
+              pubYear
+              description
+              priority
+              slug
+              tag
+              type
+              url
+              image
             }
           }
         }
@@ -206,6 +255,51 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: '/blog/1',
     toPath: '/blog/',
+    isPermanent: true,
+    redirectInBrowser: true,
+  });
+
+  const allResources = result.data.resources.nodes
+
+  const resourcePaginationDefaults = {
+    createPage,
+    component: require.resolve('./src/templates/resources.js'),
+  };
+
+  const createResourcePages = (type, resourceArray, parent = 'resources') => {
+    const groupedResources = groupResourcesByUnique(type, resourceArray);
+
+    Object.entries(groupedResources).forEach(([typeValue, resourceGroup]) => {
+      paginateResources(
+        {
+          ...resourcePaginationDefaults,
+          pathTemplate: `/${parent}/${type}/${typeValue}/<%= pageNumber %>/`,
+          type,
+          value: typeValue,
+          linkRoot: parent,
+        },
+        resourceGroup,
+      );
+    });
+  };
+
+  createResourcePages('tag', allResources);
+  createResourcePages('category', allResources);
+
+  paginateResources(
+    {
+      ...resourcePaginationDefaults,
+      pathTemplate: '/resources/<%= pageNumber %>/',
+      type: 'all',
+      value: null,
+    },
+    allResources,
+  );
+
+  // Create an alias for the first page of blog listings.
+  createRedirect({
+    fromPath: '/resources/1',
+    toPath: '/resources/',
     isPermanent: true,
     redirectInBrowser: true,
   });

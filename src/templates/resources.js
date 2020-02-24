@@ -1,15 +1,21 @@
 /** @jsx jsx */
+import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { css, jsx } from '@emotion/core';
 import Layout from '../components/Layout';
+import CategoryLink from '../components/CategoryLink';
 import TagLink from '../components/TagLink';
+import Pagination from '../components/Pagination';
 import ContentArea from '../components/ContentArea';
-import useSiteMetadata from '../hooks/use-site-metadata';
 import { colors } from 'gatsby-theme-apollo-core';
 import breakpoints from '../utils/breakpoints';
+import useSiteMetadata from '../hooks/use-site-metadata';
 
 const getHeading = ({
+  isFirstPage,
+  currentPage,
+  totalPages,
   type,
   value,
   categories,
@@ -17,18 +23,18 @@ const getHeading = ({
   if (type === 'category' && value) {
     const category = categories.find(c => c.slug === value);
     const displayName = category ? category.name : value;
-    return `Resources in the category “${displayName}”`;
+    return `${displayName} Resources`;
   }
 
   if (type === 'tag' && value) {
     return `Resources tagged with “${value}”`;
   }
 
-  if (type === 'all') {
-    return 'Latest Resources';
+  if (type === 'all' && isFirstPage) {
+    return 'Top Resources';
   }
 
-  return `Resources`;
+  return `Resources, page ${currentPage} of ${totalPages}`;
 };
 
 const StyledWrapper = styled('div')({
@@ -82,7 +88,25 @@ const Title = styled('h2')({
   whiteSpace: 'nowrap',
   paddingRight: 24,
   fontSize: '18px',
-  lineHeight: 1.5,
+  lineHeight: 1.3,
+  marginBottom: '5px',
+});
+
+const Subtitle = styled('h4')({
+  color: colors.black,
+  fontWeight: 400,
+  flex: '1 1 0%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  paddingRight: 24,
+  fontSize: '16px',
+  lineHeight: 1.3,
+  marginBottom: '10px',
+});
+
+const Author = styled(Subtitle)({
+  marginBottom: '16px',
 });
 
 const Description = styled('div')({
@@ -102,9 +126,10 @@ const StyledHR = styled('hr')({
 
 const StyledButton = styled('a')({
   backgroundColor: colors.primaryLight,
-  color: 'white',
+  color: colors.white,
   cursor: 'pointer',
   display: 'inline-flex',
+  justifyContent: 'center',
   alignItems: 'center',
   height: '36px',
   minWidth: '100px',
@@ -113,16 +138,23 @@ const StyledButton = styled('a')({
   borderRadius: '5px',
   borderWidth: '0px',
   padding: '0px 12px',
-  outlline: '0px',
+  outline: '0px',
   textDecoration: 'none',
+  textTransform: 'capitalize',
 
   ':hover, :active': {
     backgroundColor: colors.secondary,
-  }
-});
+  },
+})
 
-const ResourcesList = ({ resources,
+const Resources = ({
   pageContext: {
+    resourceGroup,
+    isFirstPage,
+    isLastPage,
+    currentPage,
+    totalPages,
+    linkBase,
     linkRoot,
     type,
     value,
@@ -135,9 +167,10 @@ const ResourcesList = ({ resources,
     tag: `Resources Tagged with “${value}”`,
     category: `Resources About ${category ? category.name : value}`,
   };
-  
+  const page = !isFirstPage ? ` (page ${currentPage} of ${totalPages})` : '';
+
   return (
-    <Layout title={`${title[type]}`}>
+    <Layout title={`${title[type]}${page}`}>
       <StyledWrapper>
         <hr
           css={css`
@@ -146,14 +179,17 @@ const ResourcesList = ({ resources,
         />
         <Heading>
           {getHeading({
+            isFirstPage,
+            currentPage,
+            totalPages,
             type,
             value,
             categories,
           })}
         </Heading>
         <PageSizing>
-        {resources.map(({ resource }) => (
-          <StyledCard key={resource.id}>
+        {resourceGroup.map(({ id, childMdx: resource }) => (
+          <StyledCard key={id}>
             <div
               css={css`
               display: flex;
@@ -173,8 +209,15 @@ const ResourcesList = ({ resources,
                   font-family: 'Source Sans Pro', sans-serif;  
                 `}
                 >
-                  <Title>{resource.title}</Title>
-                  <Description>{resource.description}</Description>
+                  <CategoryLink
+                    category={resource.frontmatter.category}
+                    linkRoot={linkRoot}
+                    ct={resource.frontmatter.category}
+                  >{resource.frontmatter.category}</CategoryLink>
+                  <Title>{resource.frontmatter.title} ({resource.frontmatter.pubYear})</Title>
+                  <Subtitle>{resource.frontmatter.subtitle}</Subtitle>
+                  <Author>{resource.frontmatter.author}</Author>
+                  <Description>{resource.frontmatter.description}</Description>
                 </div>
               </div>
             </div>
@@ -192,7 +235,7 @@ const ResourcesList = ({ resources,
                 display: block;
               `}
               >
-                {resource.tag.map(tag => (
+                {resource.frontmatter.tag.map(tag => (
                   <TagLink key={`tag-${tag}`} tag={tag} linkRoot={linkRoot} />
                 ))}
               </div>
@@ -204,17 +247,34 @@ const ResourcesList = ({ resources,
                 line-height: 1.533em;
               `}
               >
-                <StyledButton>Link</StyledButton>
+                <StyledButton href={resource.frontmatter.url}>{resource.frontmatter.action}</StyledButton>
               </div>
             </section>
                   
                 
           </StyledCard>
         ))}
+
+        <Pagination
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          linkBase={linkBase}
+          />
       </PageSizing>
       </StyledWrapper>
     </Layout>
   );
 };
 
-export default ResourcesList;
+Resources.propTypes = {
+  pageContext: PropTypes.shape({
+    resourceGroup: PropTypes.any,
+    isFirstPage: PropTypes.bool,
+    isLastPage: PropTypes.bool,
+    currentPage: PropTypes.number,
+  }).isRequired,
+};
+
+export default Resources;

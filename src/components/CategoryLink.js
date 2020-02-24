@@ -5,24 +5,23 @@ import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
 
 const CatLink = styled(Link)({
-  backgroundColor: colors.text1,
-  borderRadius: '1em',
-  color: colors.secondary,
-  lineHeight: 1,
-  //margin: ({ block }) => (block ? '0.25rem' : 0)} '0.125rem 0',
-  padding: '0.125rem 0.5rem 0.2rem',
+  textTransform: 'lowercase',
+  fontFamily: "'SFMono', 'Source Code Pro', monospace",
+  fontWeight: 500,
   textDecoration: 'none',
-  transition: 'backgroundColor 150ms linear',
+  letterSpacing: '0.09em',
+  marginBottom: '6px',
+  backgroundColor: '#1d1e1c',
+  padding: '0px 5px',
+  border: '1px solid',
+  borderRadius: '1em',
   display: 'inline-block',
-
-  '& + &': {
-    marginTop: '0.125rem',
+  '&.data': {
+    color: '#9cdcfe',
   },
-
-  ':focus, :hover, :active': {
-    backgroundColor: colors.primary,
-    borderRadius: '1em',
-  },
+  '&.product': {
+    color: '#c685c0'
+  }
 });
 
 const CategoryLink = React.memo(({ category, block = false, linkRoot }) => (
@@ -47,7 +46,9 @@ const CategoryLink = React.memo(({ category, block = false, linkRoot }) => (
       const cat = categories.find(c => c.slug === category) || {};
 
       return (
-        <CatLink to={`/${linkRoot}/category/${category}/`}>
+        <CatLink 
+          className={category}
+          to={`/${linkRoot}/category/${category}/`}>
           {cat.name ? cat.name : category}
         </CatLink>
       );

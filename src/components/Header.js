@@ -74,14 +74,16 @@ const NavbarItem = styled(Link)({
   fontWeight: 300,
   color: colors.text1,
   textDecoration: 'none',
-  border: '2px solid transparent',
-  marginRight: 'auto',
+  marginRight: '16px',
   transition: 'all 250ms ease-out',
   ':hover': {
     opacity: colors.hoverOpacity,
     color: colors.primary,
   },
-  [breakpoints.md]: {
+  '&.active': {
+    color: colors.primary,
+  },
+  [breakpoints.lg]: {
     fontSize: '18px',
     marginRight: '12px',
   },
@@ -100,7 +102,7 @@ const NavbarA = styled('a')({
     opacity: colors.hoverOpacity,
     color: colors.primary,
   },
-  [breakpoints.md]: {
+  [breakpoints.lg]: {
     fontSize: '18px',
     marginRight: '12px',
   },
@@ -123,6 +125,10 @@ const topLevelNav = [
   {
     href: "/blog/",
     label: "Blog",
+  },
+  {
+    href: "/resources/",
+    label: "Resources",
   },
 ];
 
@@ -153,6 +159,7 @@ const Header = () => {
                 to={href}
                 className={`${extraClass} text-sharp`}
                 activeClassName="active"
+                partiallyActive={true}
               >
                 {label}
               </NavbarItem>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
-import breakpoints from '../utils/breakpoints';
 
 const FooterDiv = styled('div')({
   height: '8rem',
