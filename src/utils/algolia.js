@@ -1,15 +1,21 @@
-const postQuery = `{
-  posts: allMdx(filter: {frontmatter: {slug: {ne: null}}}) {
+const siteMdxQuery = `{
+  allFile(filter: {relativePath: {glob: "**/**/*.{md,mdx}"}}) {
     edges {
       node {
-        frontmatter {
-          slug
-          title
-          seo_title
-          description
-          images
+        childMdx {
+          frontmatter {
+            slug
+            path
+            title
+            subtitle
+            category
+            section
+            type
+            author
+            description
+          }
+          rawBody
         }
-        rawBody
       }
     }
   }
@@ -17,18 +23,24 @@ const postQuery = `{
 
 const queries = [
   {
-    query: postQuery,
+    query: siteMdxQuery,
     transformer: ({ data }) =>
-      data.posts.edges.reduce((records, { node }) => {
+      data.allFile.edges.reduce((records, { node }) => {
         const {
           slug,
+          path,
           title,
-          seo_title: alt,
+          subtitle,
+          author,
           description,
-        } = node.frontmatter;
+          category,
+          section,
+          tag,
+        } = node.childMdx.frontmatter;
+        relativePath = node.relativePath;
 
-        const base = { slug, title, alt, description };
-        const chunks = node.rawBody.split('\n\n');
+        const base = { slug, path, title, subtitle, author, category, section, tag, description };
+        const chunks = node.childMdx.rawBody.split('\n\n');
 
         return [
           ...records,
@@ -39,7 +51,8 @@ const queries = [
           })),
         ];
       },
-    []),
+      []),
+    indexName: 'the-gyre',
   },
 ]
 

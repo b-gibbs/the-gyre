@@ -1,5 +1,26 @@
 ---
-title: 404 — Not Found
+slug: '404.html'
+path: '404'
+title: not found
+subtitle: ''
+category: 
+ - pages
+tag:
+ - pages
+section: pages
+type: pages
+author: Bradley Gibbs
+description: 404 page
 ---
+import Layout from '../components/Layout.js';
+import PageLayout from '../components/PageLayout.js';
 
-The URL you entered in doesn’t appear to exist. Please check it and try again.
+export default ({ children }) => (
+  <Layout>
+    <PageLayout>
+      {children}
+    </PageLayout>
+  </Layout>
+);
+
+You've reached a page that doesn't exist. Please click an item from the menu above.

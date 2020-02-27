@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "@emotion/styled";
 import { Link } from "gatsby";
 import logo from "../images/hrz-logo.png";
@@ -6,7 +6,6 @@ import { colors } from "gatsby-theme-apollo-core";
 import breakpoints from '../utils/breakpoints';
 import Burger from './Burger';
 import NavbarBodyMobile from './NavbarBodyMobile';
-import Search from './Search';
 
 const NavbarContainer = styled.nav({
   position: 'sticky',
@@ -121,6 +120,31 @@ const NavbarBurger = styled.div({
   boxSizing: 'border-box',
 });
 
+const MobileMenuBody = styled.div(props => ({
+  backgroundColor: '#fff',
+  borderRadius: '3px',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+  color: colors.text2,
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'absolute',
+  top: '17px',
+  right: '8px',
+  width: '300px',
+  marginLeft: 'auto',
+  minHeight: '200px',
+  minWidth: '250px',
+  transition: 'all 0.25s ease-out',
+  opacity: props.open ? 1 : 0,
+  visibility: props.open ? 'visible' : 'hidden',
+  [breakpoints.sm]: {
+    maxWidth: '546px',
+  },
+  [breakpoints.md]: {
+    maxWidth: '580px',
+  },
+}));
+
 const topLevelNav = [
   {
     href: "/blog/",
@@ -133,7 +157,7 @@ const topLevelNav = [
 ];
 
 const Header = () => {
-
+  const ref = useRef();
   const [open, setOpen] = useState(false);
 
   return (
@@ -143,6 +167,7 @@ const Header = () => {
         <LogoLink to="/" className='navbar-logo'>
           <Logo
             src={logo}
+            key='logo'
             alt="Data ∩ Product"
             // This keeps the logo from flashing at full-width on fresh loads.
             style={{ maxWidth: "180px" }}
@@ -151,8 +176,8 @@ const Header = () => {
         
         <NavbarMenu className='navbar-menu'>
           <Navleft className='nav-left'>
-            <NavbarA href='https://thegyre.io/data/'>Data Science</NavbarA>
-            <NavbarA href='https://thegyre.io/product/'>Product Management</NavbarA>
+            <NavbarA key='data' href='https://thegyre.io/data/'>Data Science</NavbarA>
+            <NavbarA key='product' href='https://thegyre.io/product/'>Product Management</NavbarA>
             {topLevelNav.map(({ href, label, extraClass = "" }) => (
               <NavbarItem
                 key={label}
@@ -165,16 +190,22 @@ const Header = () => {
               </NavbarItem>
             ))}
           </Navleft>
-          <Search />
+          <NavbarItem
+            key='search'
+            to='/search'
+            activeClassName='active'
+            partiallyActive={true}
+            >Search</NavbarItem>
         </NavbarMenu>
-       
       </NavbarBody>
       <NavbarSearchMobile>
         <NavbarBurger> 
           <Burger open={open} setOpen={setOpen} />
         </NavbarBurger>
       </NavbarSearchMobile>
-      <NavbarBodyMobile className='navbar-body-mobile' open={open} setOpen={setOpen} />
+      <MobileMenuBody className='mobile-menu-body' open={open}>
+        <NavbarBodyMobile open={open} />
+      </MobileMenuBody>
     </NavbarContainer>
   )
 };

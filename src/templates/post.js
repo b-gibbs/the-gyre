@@ -54,7 +54,6 @@ export default ({ data: { post, image } }) => {
     <React.Fragment>
       <SEO
         frontmatter={post.frontmatter}
-        postImage={image.seo.fluid.src}
         isBlogPost
       />
       <BlogLayout title={post.frontmatter.title}>
@@ -79,7 +78,6 @@ export const pageQuery = graphql`
         category
         tag
         datePublished: date(formatString: "YYYY-MM-DDTHH:mm:ssZ")
-        seo_title
         slug
       }
     }

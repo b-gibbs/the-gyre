@@ -2,6 +2,7 @@ const path = require('path');
 const { template, chunk } = require('lodash');
 const fs = require('fs');
 
+/* POSTS */
 const getUnique = (field, posts) =>
   posts.reduce((uniques, post) => {
     const values = post.childMdx.frontmatter[field];
@@ -57,6 +58,7 @@ const paginate = (
     });
   });
 
+/* RESOURCES */
 const getUniqueResources = (field, resources) =>
   resources.reduce((uniques, resource) => {
     const values = resource.childMdx.frontmatter[field];
@@ -65,7 +67,7 @@ const getUniqueResources = (field, resources) =>
   }, []);
 
 const groupResourcesByUnique = (field, resources) => {
-  const uniqueValues = getUnique(field, resources);
+  const uniqueValues = getUniqueResources(field, resources);
 
   return uniqueValues.reduce(
     (grouped, unique) => ({
@@ -145,21 +147,24 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id
           childMdx {
             frontmatter {
-              publish
+              date
               title
               description
               slug
-              images
+              path
               category
+              section
               tag
+              images 
+              publish
             }
           }
         }
       }
       resources: allFile(
-        filter: {relativePath: {glob: "resources/**/*.{md,mdx}"}}
-        sort: {fields: childMdx___frontmatter___priority, order: ASC }
-      ) {
+        filter: {relativePath: {glob: "resources/**/*.{md,mdx}"}}, 
+        sort: {fields: childMdx___frontmatter___priority, order: ASC}
+        ) {
         nodes {
           id
           childMdx {
@@ -167,18 +172,39 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               title
               subtitle
               author
+              pubYear
+              type
               action
               category
-              pubYear
+              section
+              slug
+              path
+              tag
               description
               priority
-              slug
-              tag
-              type
               url
-              image
+              publish
+              coverImage {
+                childImageSharp {
+                  fluid(maxWidth: 120) {
+                    aspectRatio
+                    originalImg
+                    originalName
+                    presentationHeight
+                    presentationWidth
+                    sizes
+                    srcSetWebp
+                    srcSet
+                    srcWebp
+                    tracedSVG
+                    src
+                    base64
+                  }
+                }
+              }
             }
           }
+          relativePath
         }
       }
     }
@@ -210,6 +236,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         slug,
       },
     });
+    reporter.info('Created post')
   });
 
   const paginationDefaults = {
@@ -250,6 +277,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     },
     allPosts,
   );
+  reporter.info('Created post previews page')
 
   // Create an alias for the first page of blog listings.
   createRedirect({
@@ -258,13 +286,43 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     isPermanent: true,
     redirectInBrowser: true,
   });
+/* END POSTS */
 
-  const allResources = result.data.resources.nodes
+/* START RESOURCES */
+  const resources = result.data.resources.nodes.filter(
+    resource => resource.childMdx.frontmatter.publish !== false,
+  );
 
+  resources.forEach(resource => {
+    if (
+      !resource.childMdx ||
+      !resource.childMdx.frontmatter ||
+      !resource.childMdx.frontmatter.slug
+    ) {
+      console.log(resource); // eslint-disable-line no-console
+      throw Error('All resources require a `slug` field in the frontmatter.');
+    }
+
+    const { slug } = resource.childMdx.frontmatter;
+
+    createPage({
+      path: `resources/${slug}/`,
+      component: require.resolve('./src/templates/resource.js'),
+      context: {
+        slug,
+      },
+    });
+    reporter.info('Created resource page')
+  });
+  
   const resourcePaginationDefaults = {
     createPage,
     component: require.resolve('./src/templates/resources.js'),
   };
+
+  const allResources = resources.filter(
+    resource => resource.childMdx.frontmatter.publish !== false,
+  );
 
   const createResourcePages = (type, resourceArray, parent = 'resources') => {
     const groupedResources = groupResourcesByUnique(type, resourceArray);

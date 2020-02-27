@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { css, jsx } from '@emotion/core';
+import Img from 'gatsby-image';
 import Layout from '../components/Layout';
 import CategoryLink from '../components/CategoryLink';
 import TagLink from '../components/TagLink';
@@ -61,6 +62,7 @@ const PageSizing = styled(ContentArea)({
   [breakpoints.lg]: {
     display: 'grid',
     gridTemplateColumns: 'repeat(1, minmax(400px, 1fr))',
+    gridTemplateRows: 3,
     alignContent: 'center',
     justifyContent: 'center', 
   }
@@ -77,6 +79,22 @@ const StyledCard = styled('section')({
   paddingLeft: 24,
   paddingRight: 24,
   padding: 16,
+  marginBottom: 'auto',
+});
+
+const ImageInfoContainer = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: '1fr 4fr',
+  gridColumnGap: '12px',
+  marginTop: 10,
+})
+
+const StyledImg = styled(Img)({
+  maxWidth: '120px',
+});
+
+const Info = styled('div')({
+  
 });
 
 const Title = styled('h2')({
@@ -124,7 +142,13 @@ const StyledHR = styled('hr')({
   borderWidth: '0px',
 })
 
+const TagLinkContainer = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: '4fr 1fr',
+})
+
 const StyledButton = styled('a')({
+  margin: '0 0 0 auto',
   backgroundColor: colors.primaryLight,
   color: colors.white,
   cursor: 'pointer',
@@ -146,6 +170,8 @@ const StyledButton = styled('a')({
     backgroundColor: colors.secondary,
   },
 })
+
+
 
 const Resources = ({
   pageContext: {
@@ -174,8 +200,8 @@ const Resources = ({
       <StyledWrapper>
         <hr
           css={css`
-          margin: 0;
-        `}
+            margin: 0;
+          `}
         />
         <Heading>
           {getHeading({
@@ -188,84 +214,54 @@ const Resources = ({
           })}
         </Heading>
         <PageSizing>
-        {resourceGroup.map(({ id, childMdx: resource }) => (
-          <StyledCard key={id}>
-            <div
-              css={css`
-              display: flex;
-              margin-bottom: 24px;
-            `}
-            >
-              <div
-                css={css`
-                flex: 1 1 0%;
-                overflow: hidden;
-              `}
-              >
-                <div
-                  css={css`
-                  font-size: 15px;
-                  line-height: 1.53em;
-                  font-family: 'Source Sans Pro', sans-serif;  
-                `}
+          {resourceGroup.map(({ id, childMdx: resource }) => (
+            <StyledCard key={id}>
+              <CategoryLink
+                category={resource.frontmatter.category}
+                linkRoot={linkRoot}
+                ct={resource.frontmatter.category}
                 >
-                  <CategoryLink
-                    category={resource.frontmatter.category}
-                    linkRoot={linkRoot}
-                    ct={resource.frontmatter.category}
-                  >{resource.frontmatter.category}</CategoryLink>
-                  <Title>{resource.frontmatter.title} ({resource.frontmatter.pubYear})</Title>
+                {resource.frontmatter.category}
+              </CategoryLink>
+              <ImageInfoContainer>
+                <StyledImg
+                  sizes={{...resource.frontmatter.coverImage.childImageSharp.fluid,
+                    aspectRatio: resource.frontmatter.coverImage.childImageSharp.fluid.aspectRatio
+                  }}
+                />
+                <Info>
+                  <Title>
+                    {resource.frontmatter.title} ({resource.frontmatter.pubYear})
+                  </Title>
                   <Subtitle>{resource.frontmatter.subtitle}</Subtitle>
                   <Author>{resource.frontmatter.author}</Author>
                   <Description>{resource.frontmatter.description}</Description>
-                </div>
-              </div>
-            </div>
-            <StyledHR />
-            <section
-              css={css`
-              display: flex;
-              marginTop: 24px;
-            `}
-            >
-              <div
-                css={css`
-                flex: 1 1 0%;
-                margin-right: auto;
-                display: block;
-              `}
-              >
-                {resource.frontmatter.tag.map(tag => (
-                  <TagLink key={`tag-${tag}`} tag={tag} linkRoot={linkRoot} />
-                ))}
-              </div>
-              <div
-                css={css`
-                margin-left: 16px;
-                box-sizing: inherit;
-                display: block;
-                line-height: 1.533em;
-              `}
-              >
-                <StyledButton href={resource.frontmatter.url}>{resource.frontmatter.action}</StyledButton>
-              </div>
-            </section>
-                  
-                
-          </StyledCard>
-        ))}
+                </Info>
+              </ImageInfoContainer>
+              <StyledHR />
+              <TagLinkContainer>
+                  {resource.frontmatter.tag.map(tag => (
+                    <TagLink key={`tag-${tag}`} tag={tag} linkRoot={linkRoot} />
+                  ))}
 
-        <Pagination
-          isFirstPage={isFirstPage}
-          isLastPage={isLastPage}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          linkBase={linkBase}
+                  <StyledButton href={resource.frontmatter.url}>
+                    {resource.frontmatter.action}
+                  </StyledButton> 
+                </TagLinkContainer>
+            </StyledCard>
+          ))}
+
+          <Pagination
+            isFirstPage={isFirstPage}
+            isLastPage={isLastPage}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            linkBase={linkBase}
           />
-      </PageSizing>
+        </PageSizing>
       </StyledWrapper>
     </Layout>
-  );
+  )
 };
 
 Resources.propTypes = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
@@ -11,16 +11,16 @@ const NavbarBodyMobile = ({ open, ...props }) => {
   const isHidden = open ? true : false;
 
   return (
-    <StyledBody open={open} aria-hidden={!isHidden} {...props}>
+    <>
       <NavbarMenuMobile>
         <StyledLink to='/'open={open}>Home</StyledLink>
         <StyledLinkA href='https://thegyre.io/data'open={open}>Data Science</StyledLinkA>
         <StyledLinkA href='https://thegyre.io/product'open={open}>Product Management</StyledLinkA>
         <StyledLink to='/blog' open={open}>Blog</StyledLink>
         <StyledLink to='/resources' open={open}>Resources</StyledLink>
-        <Search />
+        <StyledLink to='/search' open={open}>Search</StyledLink>
       </NavbarMenuMobile>
-    </StyledBody>
+    </>
   )
 }
 
