@@ -3,13 +3,11 @@ import React, { useMemo, useState, createRef } from 'react';
 import Layout from '../components/Layout';
 import styled from '@emotion/styled';
 import { FaAlgolia } from 'react-icons/fa';
-import { useOnClickOutside } from '../hooks';
 import {
   InstantSearch,
   Index,
   Configure,
   Hits,
-  SearchBox,
   Highlight,
   connectSearchBox,
 } from 'react-instantsearch-dom';
@@ -134,6 +132,9 @@ const SearchCredit = styled('p')({
 
   a: {
     textDecoration: 'none',
+    ':visited, :hover, :active': {
+      color: colors.primary,
+    }
   }
 });
 
@@ -184,9 +185,7 @@ export default function Search() {
     appId,
     apiKey,
   ])
-  useOnClickOutside(ref, () => setActive(false))
-  console.log('setActive is: ', { setActive });
-  console.log('active is: ', { active });
+ 
   return (
     <Layout>
       <PageLayout ref={ref}>

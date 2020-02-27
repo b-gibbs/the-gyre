@@ -53,18 +53,13 @@ const Heading = styled('h1')({
 
 const PageSizing = styled(ContentArea)({
   margin: '20px',
-  listStyle: 'none',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(400px, 1fr))',
   gridGap: '1rem',
   alignContent: 'center',
   justifyContent: 'center',
   [breakpoints.lg]: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(1, minmax(400px, 1fr))',
-    gridTemplateRows: 3,
-    alignContent: 'center',
-    justifyContent: 'center', 
+    gridTemplateColumns: 'repeat(1, minmax(85px, 1fr))',
   }
 });
 
@@ -91,10 +86,13 @@ const ImageInfoContainer = styled('div')({
 
 const StyledImg = styled(Img)({
   maxWidth: '120px',
+  minWidth: '85px',
 });
 
 const Info = styled('div')({
-  
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });
 
 const Title = styled('h2')({

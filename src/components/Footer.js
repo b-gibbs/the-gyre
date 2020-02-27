@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
+import breakpoints from '../utils/breakpoints';
 
 const FooterDiv = styled('div')({
   height: '8rem',
@@ -30,6 +31,10 @@ const Pages = styled('p')({
   marginTop: '20px',
   fontSize: '16px',
   color: colors.text1,
+  whitespace: 'nowrap',
+  [breakpoints.sm]: {
+    fontSize: '12px',
+  }
 })
 
 const StyledLink = styled(Link)({

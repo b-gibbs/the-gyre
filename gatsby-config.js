@@ -123,7 +123,12 @@ module.exports = {
             resolve: 'gatsby-remark-responsive-iframe',
           },
           'gatsby-remark-copy-linked-files',
-          'gatsby-remark-smartypants',
+          {
+            resolve: "gatsby-remark-smartypants",
+            options: {
+              dashes: "oldschool",
+            },
+          },
         ],
       },
     },
