@@ -40,7 +40,7 @@ const getHeading = ({
 
 const StyledWrapper = styled('div')({
   backgroundColor: '#f9fafd',
-  height: '100vh',
+  minHeight: '100vh',
 })
 
 const Heading = styled('h1')({
@@ -52,7 +52,7 @@ const Heading = styled('h1')({
 });
 
 const PageSizing = styled(ContentArea)({
-  margin: '20px',
+  margin: '20px 20px 0px 20px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(400px, 1fr))',
   gridGap: '1rem',
@@ -79,14 +79,43 @@ const StyledCard = styled('section')({
 
 const ImageInfoContainer = styled('div')({
   display: 'grid',
-  gridTemplateColumns: '1fr 4fr',
+  gridTemplateColumns: '120px 4fr',
   gridColumnGap: '12px',
   marginTop: 10,
+  [breakpoints.sm]: {
+    gridTemplateColumns: '1fr'
+  }
 })
 
-const StyledImg = styled(Img)({
-  maxWidth: '120px',
-  minWidth: '85px',
+
+const NonStretchImg = props => {
+  let normalizedProps = props
+  if (props.fluid && props.fluid.presentationWidth) {
+    normalizedProps = {
+      ...props,
+      style: {
+        ...(props.style || {}),
+        maxWidth: props.fluid.presentationWidth,
+        margin: "0 auto", // Used to center the image
+        
+      },
+      imgStyle:{ objectFit: `contain` },
+    }
+  }
+
+  return <Img {...normalizedProps} />
+}
+
+const StyledImg = styled(NonStretchImg)({
+
+  width: '100%',
+  objectFit: 'contain',
+  [breakpoints.sm]: {
+    visibility: 'hidden',
+    opacity: 0,
+    width: 0,
+    height: 0,
+  }
 });
 
 const Info = styled('div')({
@@ -95,7 +124,7 @@ const Info = styled('div')({
   whiteSpace: 'nowrap',
 });
 
-const Title = styled('h2')({
+const TitleYear = styled('h2')({
   color: colors.black,
   fontWeight: 600,
   flex: '1 1 0%',
@@ -105,7 +134,7 @@ const Title = styled('h2')({
   paddingRight: 24,
   fontSize: '18px',
   lineHeight: 1.3,
-  marginBottom: '5px',
+  marginBottom: '10px',
 });
 
 const Subtitle = styled('h4')({
@@ -130,6 +159,7 @@ const Description = styled('div')({
   fontSize: '15px',
   lineHeight: '1.53em',
   fontFamily: "'Source Sans Pro', sans-serif",
+  whiteSpace: 'normal',
 })
 
 const StyledHR = styled('hr')({
@@ -196,11 +226,6 @@ const Resources = ({
   return (
     <Layout title={`${title[type]}${page}`}>
       <StyledWrapper>
-        <hr
-          css={css`
-            margin: 0;
-          `}
-        />
         <Heading>
           {getHeading({
             isFirstPage,
@@ -222,30 +247,29 @@ const Resources = ({
                 {resource.frontmatter.category}
               </CategoryLink>
               <ImageInfoContainer>
-                <StyledImg
-                  sizes={{...resource.frontmatter.coverImage.childImageSharp.fluid,
-                    aspectRatio: resource.frontmatter.coverImage.childImageSharp.fluid.aspectRatio
-                  }}
-                />
+                  <StyledImg fluid={{...resource.frontmatter.coverImage.childImageSharp.fluid}} />             
                 <Info>
-                  <Title>
-                    {resource.frontmatter.title} ({resource.frontmatter.pubYear})
-                  </Title>
-                  <Subtitle>{resource.frontmatter.subtitle}</Subtitle>
+                    {resource.frontmatter.pubYear !== null ?
+                      <TitleYear>{resource.frontmatter.title} ({resource.frontmatter.pubYear})</TitleYear> :
+                      <TitleYear>{resource.frontmatter.title}</TitleYear>   
+                    }
+                    {resource.frontmatter.subtitle !== null &&
+                    <Subtitle>{resource.frontmatter.subtitle}</Subtitle>}
                   <Author>{resource.frontmatter.author}</Author>
                   <Description>{resource.frontmatter.description}</Description>
                 </Info>
               </ImageInfoContainer>
               <StyledHR />
               <TagLinkContainer>
+                <div>
                   {resource.frontmatter.tag.map(tag => (
                     <TagLink key={`tag-${tag}`} tag={tag} linkRoot={linkRoot} />
                   ))}
-
-                  <StyledButton href={resource.frontmatter.url}>
-                    {resource.frontmatter.action}
-                  </StyledButton> 
-                </TagLinkContainer>
+                </div>
+                <StyledButton href={resource.frontmatter.url}>
+                  {resource.frontmatter.action}
+                </StyledButton> 
+              </TagLinkContainer>
             </StyledCard>
           ))}
 

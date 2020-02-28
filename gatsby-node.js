@@ -114,6 +114,8 @@ const paginateResources = (
     })
   })
 
+
+
 // This is a shortcut so MDX can import components without gross relative paths.
 // Example: import { Image } from '$components';
 exports.onCreateWebpackConfig = ({ actions }) => {

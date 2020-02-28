@@ -35,5 +35,5 @@ export default ({ children, title, className = '' }) => [
   <Main key="app-main" className={className}>
     {children}
   </Main>,
-  <Footer />
+  <Footer key='app-footer' />,
 ];

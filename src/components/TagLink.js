@@ -10,7 +10,7 @@ const TagLink = styled(Link)`
   text-decoration: none;
   font-size: 0.825rem;
   line-height: 1.75;
-  margin: 0 0.15rem;
+  margin: 0 0.25rem;
   color: ${colors.primary};
 
   ::before {

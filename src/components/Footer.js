@@ -4,64 +4,85 @@ import styled from '@emotion/styled';
 import { colors } from 'gatsby-theme-apollo-core';
 import breakpoints from '../utils/breakpoints';
 
-const FooterDiv = styled('div')({
-  height: '8rem',
+const Footer = styled('footer')({
+  fontSize: '1rem',
+  paddingBottom: '2rem',
+  textAlign: 'center',
   width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
   backgroundColor: colors.background2,
+  [breakpoints.md]: {
+    fontSize: '0.75rem'
+  }
 })
 
-const Copy = styled('p')({
-  fontSize: '11px',
+const Copyright = styled('div')({
   color: colors.text2,
+  display: 'inline-block',
+  margin: '0 0.25rem',
+  padding: '0.25rem',
+  display: 'block',
+  marginTop: '0.5rem',
 
   a: {
     textDecoration: 'none',
     color: colors.primary,
-
-    ':focus, :hover, :active, :visited': {
+    ':active, :hover, :focus, :visited': {
       color: colors.primary,
     }
   }
 });
 
-const Pages = styled('p')({
-  marginTop: '20px',
-  fontSize: '16px',
-  color: colors.text1,
-  whitespace: 'nowrap',
-  [breakpoints.sm]: {
-    fontSize: '12px',
-  }
-})
-
-const StyledLink = styled(Link)({
+const FooterLink = styled(Link)({
   color: colors.text2,
+  display: 'inline-block',
+  margin: '0 0.25rem',
+  padding: '0.25rem',
   textDecoration: 'none',
-  margin: '10px 10px 0 10px',
+
+  ':active, :hover, :focus': {
+    color: colors.secondary,
+  },
+
+  [breakpoints.md]: {
+    order: 2,
+
+    ':&:last-of-type': {
+      marginRight: 0,
+    }
+  }
 });
 
-const LinkA = styled('a')({
+const FooterLinkA = styled(Link)({
   color: colors.text2,
+  display: 'inline-block',
+  margin: '0 0.25rem',
+  padding: '0.25rem',
   textDecoration: 'none',
-  margin: '10px 10px 0 10px',
+
+  ':active, :hover, :focus': {
+    color: colors.secondary,
+  },
+
+  [breakpoints.md]: {
+    order: 2,
+
+    ':&:last-of-type': {
+      marginRight: 0,
+    }
+  }
 });
 
 export default () => (
-  <FooterDiv>
-    <Pages>
-      <StyledLink to='/'>Home</StyledLink>
-      <LinkA href='https://thegyre.io/data'>Data Science</LinkA>
-      <LinkA href='https://thegyre.io/product'>Product Management</LinkA>
-      <StyledLink to='/blog'>Blog</StyledLink>
-      <StyledLink to='/about'>About</StyledLink>
-    </Pages>
-    <Copy>All content &copy;
-      <a href='https://www.linkedin.com/in/bradley-gibbs/'> Bradley Gibbs</a>
-    </Copy>
-  </FooterDiv>
-
+  <Footer>
+    <FooterLink to='/'>Home</FooterLink>
+    <FooterLinkA href='https://thegyre.io/data'>Data</FooterLinkA>
+    <FooterLinkA href='https://thegyre.io/product'>Product</FooterLinkA>
+    <FooterLink to='/blog'>Blog</FooterLink>
+    <FooterLink to='/resources'>Resources</FooterLink>
+    <FooterLink to='/about'>About</FooterLink>
+    <br />
+    <Copyright>All content &copy;
+      <a href='https://linkedin.com/in/bradleygibbs'> Bradley Gibbs</a></Copyright>
+  </Footer>
 );
 

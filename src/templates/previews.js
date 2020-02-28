@@ -38,7 +38,7 @@ const getHeading = ({
 
 const StyledWrapper = styled('div')({
   backgroundColor: '#f9fafd',
-  height: '100vh',
+  minHeight: '100vh',
 })
 
 const Heading = styled('h1')({
@@ -50,18 +50,14 @@ const Heading = styled('h1')({
 });
 
 const PageSizing = styled(ContentArea)({
-  margin: '20px',
-  listStyle: 'none',
+  margin: '20px 20px 0px 20px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, minmax(400px, 1fr))',
   gridGap: '1rem',
   alignContent: 'center',
   justifyContent: 'center',
   [breakpoints.lg]: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(1, minmax(400px, 1fr))',
-    alignContent: 'center',
-    justifyContent: 'center', 
+    gridTemplateColumns: 'repeat(1, minmax(85px, 1fr))',
   }
 });
 
@@ -224,8 +220,6 @@ const Previews = ({
                 <StyledButton to={`blog/${post.frontmatter.slug}/`}>Read</StyledButton>
               </div>
             </section>
-                  
-                
           </StyledCard>
         ))}
 
@@ -236,7 +230,7 @@ const Previews = ({
           totalPages={totalPages}
           linkBase={linkBase}
           />
-      </PageSizing>
+        </PageSizing>
       </StyledWrapper>
     </Layout>
   );
