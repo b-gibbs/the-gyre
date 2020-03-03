@@ -13,52 +13,30 @@ author: Bradley Gibbs
 description: About page
 ---
 import Layout from '../components/Layout.js';
-import PageLayout from '../components/PageLayout.js';
 import HeroAbout from '../components/HeroAbout.js';
-import { graphql } from 'gatsby';
+import { PageBody } from '$styles';
 import breakpoints from '../utils/breakpoints.js';
 import GatsbyImage from 'gatsby-image';
 import { colors } from 'gatsby-theme-apollo-core';
-import Image from '../components/Image';
 
 
 export default ({ children }) => (
   <Layout>
-    <PageLayout>
-      <HeroAbout />
+    <HeroAbout />
+    <PageBody style={{
+      marginTop:0,
+    }}>
       {children}
-    </PageLayout>
+    </PageBody>
   </Layout>
 );
 
-<div className='photo-credit' style={{
-  margin: '0 auto',
-  width: '700px',
-  display: 'flex',
-  flexDirection: 'columns',
-}}>
 
-  <p style={{
-    fontSize: '12px',
-    color: colors.text4,
-    margin: '0 auto 10px 10px',
-  }}>
-  Viking Gyre, a spiral of icebergs in the Arctic North Atlantic.</p>
-  
-  <p style={{
-    fontSize: '12px',
-    color: colors.text4,
-    margin: '0 10px 10px auto',
-  }}>
-  Credit: Nia Power via National Geographic</p>
-</div>
 
 <div style={{
-  maxWidth: '1000px',
   margin: '20px auto',
 }}>
 
-## About Gyres
 A gyre (pronounced with a soft 'g', as in giraffe or gyrate) is a circular ocean current formed by the Earth's wind patterns and the forces created by the rotation of the planet.<br/>
 
 The url for this site (the gyre) is a nod to The Second Coming, a poem by William Butler Yeats. 
@@ -87,7 +65,11 @@ The Second Coming
 <div style={{
   fontFamily: 'cursive',
   fontWeight: 400,
-  fontSize: '18px',
+  fontSize: '20px',
+  [breakpoints.sm]: {
+    fontWeight: 300,
+    fontSize: '16px',
+  }
 }}>
 Turning and turning in the widening gyre<br/> 
 The falcon cannot hear the falconer;<br/>

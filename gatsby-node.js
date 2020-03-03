@@ -122,7 +122,11 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-      alias: { $components: path.resolve(__dirname, 'src/components') },
+      alias: {
+        $components: path.resolve(__dirname, 'src/components'),
+        $styles: path.resolve(__dirname, 'src/components/styles'),
+        $utils: path.resolve(__dirname, 'src/utils'),
+      },
     },
     node: {
       fs: 'empty'

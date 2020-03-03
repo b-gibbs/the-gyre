@@ -45,6 +45,13 @@ module.exports = {
     },
   ],
   settings: {
+    'import/resolver': {
+      'alias': [
+        ['$components', './src/components']
+        ['$styles', './src/components/styles']
+        ['$utils', './src/utils']
+      ]
+    },
     react: {
       version: 'detect',
     },

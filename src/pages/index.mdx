@@ -17,7 +17,7 @@ import styled from '@emotion/styled';
 import HeroWrapper from '../components/HeroWrapper.js';
 import HeroContent from '../components/HeroContent.js';
 import Hero from '../components/Hero.js';
-import { DocsGrid, PageBody } from '../components/styles';
+import { DocsGrid, Grid, PageBody } from '../components/styles';
 import GatsbyImage from 'gatsby-image';
 import BackgroundImage from 'gatsby-background-image';
 import breakpoints from '../utils/breakpoints.js';
@@ -70,64 +70,53 @@ export default ({ children, ...data }) => (
   color: colors.primary,
   textAlign: 'center',
 }}>
-  A top-down overview of data science aimed at product managers.
+  A middle-out approach to data science for product managers.
 </h4>
 
 
-Data science will continue to grow in use and importance for the foreseeable future. Increasingly, product managers are going to be adding a new component to our teams---a data scientist (or several). Whether the product or service we manage is wholly or partially based in machine learning or deep learning, we need to be able to speak with our new data teammates in an informed manner, both to understand what they're doing and also to be able to walk through decisions with them and understand the trade-offs.
+Data science will continue to grow in use and importance for the foreseeable future. Increasingly, product managers are going to be adding a new component to our teams—a data scientist (or several). Whether the product or service we manage is wholly or partially based in machine learning or deep learning, we need to be able to speak with our new data teammates in an informed manner, both to understand what they're doing and also to be able to walk through decisions with them and understand the trade-offs.
 
 
-<DocsGrid
-  minWidth='20em'
-  style={{
-    gridColumn: '2/5',
-  }}
+<Grid
+  minWidth='275px'
+  align='left'
 >
-  <div style={{
-    paddingTop: '26px',
-  }}>
+  <div>
+    <p style={{
+      fontSize: '14px',
+      color: colors.primary,
+      textAlign: 'center',
+      margin: 0
+    }}>Resources for Data Scientists</p>
     <GatsbyImage 
       alt="Data Scientists"
       sizes={{...props.data.ds.image.fluid, aspectRatio: props.data.ds.image.fluid.aspectRatio}}
     />
-    <p style={{
-      fontSize: '14px',
-      textAlign: 'center',
-      color: colors.primary,
-      marginBottom: '5px',
-    }}>
-    Resources for Data Scientists</p>
   </div>
-
+  <div>
+    Resources for data scientists take a bottom-up approach, focusing primarily on tactics. There are numerous books, MOOCs, bootcamps, websites and advanced university degree programs that are devoted to those who want to pursue data science as a career. It can take months or years of study to develop an understanding of the breadth and depth of the field and much of this knowledge would not be useful in a product management role.
+  </div>
   <div>
     <p style={{
       fontSize: '14px',
-      textAlign: 'center',
       color: colors.primary,
-      marginBottom: '5px',
-    }}>
-    Resources for Executives (AI Strategy)</p>
+      textAlign: 'center',
+      margin: 0
+    }}>Resources for C-Suite Execs</p>
     <GatsbyImage 
       alt="C-Suite"
       sizes={{...props.data.cs.image.fluid, aspectRatio: props.data.cs.image.fluid.aspectRatio}}
-      style={{
-        marginBottom: '20px',
-      }}
     />
   </div>
-
+  <div>
+    Resources for executives take a top-down approach, focusing primarily on strategy. Topics often include the benefits of establishing a data science department, setting realistic expectations for AI projects, team composition, finding the right people and long-term strategies and applications, etc. They rarely dig deep enough to be useful to a product manager.
+  </div>
   <div style={{
-    marginTop:'26px',
-    marginBottom: '26px',
-    position: 'relative',
-  }}
-  >
-    <GatsbyImage
+    position: 'relative'
+  }}>
+    <GatsbyImage 
       alt="Product Managers"
       sizes={{...props.data.pdm.image.fluid, aspectRatio: props.data.pdm.image.fluid.aspectRatio}}
-      style={{
-        position: 'relative',
-      }}
     />
     <p style={{
       fontSize: '14px',
@@ -138,12 +127,19 @@ Data science will continue to grow in use and importance for the foreseeable fut
       lineHeight: '24px',
       top: 'calc(50% - 12px)',
       
-    }}>Where Product Managers operate</p>
+    }}>
+      Where Product Managers operate
+    </p>
   </div>
-</DocsGrid>
+  <div>
+    Ideally, there would be resources for product managers that would connect the strategies to the tactics, getting product managers up-to-speed quickly, so they could facilitate the data science aspects of their products in the same way they work with design, engineering, marketing, sales and the C-Suite stakeholders on all other aspects of the products they manage.
+  </div>
+</Grid>
 
-Resources for data scientists take a bottom-up approach, focusing primarily on tactics. There are numerous books, MOOCs, bootcamps, websites and an increasing number of advanced degree programs being offered by traditional universities that are devoted to those who want to pursue data science as a career. It can take months or years of study to develop an understanding of the breadth and depth of the field and much of this knowledge would not be useful in a product management role.
-
-Resources for executives take a top-down approach, focusing primarily on strategy. Topics often include the benefits of establishing a data science department, setting realistic expectations for AI projects, team composition, finding the right people and long-term strategies and applications, etc. They rarely dig deep enough to be useful to a product manager.
-
-This site will provide a middle out approach that caters directly to product managers. This is not an exhaustive survey of all things data science. Rather, it is a scaffolding, intended to show the dimensions of data science, what the bigger pieces look like and how they sit in relation to one another. It will also discuss applications of data science that may spark ideas for how you might use data to improve your product or service.
+<div style={{
+  margin: '20px auto',
+}}>
+  <p>
+  This site will provide that middle-out approach that caters directly to product managers. This is not an exhaustive survey of all things data science. Rather, it is a scaffolding, intended to show the dimensions of data science, what the bigger pieces look like and how they sit in relation to one another. It will also discuss applications of data science that may spark ideas for how you might use data to improve your product or service.
+  </p>
+</div>

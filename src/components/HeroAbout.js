@@ -4,14 +4,15 @@ import styled from '@emotion/styled';
 import { transparentize } from 'polished';
 import BackgroundImage from 'gatsby-background-image';
 import breakpoints from '../utils/breakpoints';
+import { colors } from 'gatsby-theme-apollo-core';
 
-const HeroAbout = ({ className, ...props }) => (
+const BackgroundSection = ({ className }) => (
   <StaticQuery
     query={graphql`
       query {
         image: file(relativePath: { eq: "gyre.png" }) {
           childImageSharp {
-            fluid(quality: 90, maxWidth: 1920) {
+            fluid(quality: 100, maxWidth: 1000) {
               ...GatsbyImageSharpFluid_withWebp
             }
           }
@@ -22,41 +23,36 @@ const HeroAbout = ({ className, ...props }) => (
       // Set ImageData.
       const imageData = data.image.childImageSharp.fluid
       return (
-        <ImageContainer>
-          <StyledBackgroundImage
+        <>
+          <BackgroundImage
             Tag="section"
             className={className}
             fluid={imageData}
-            backgroundColor={"#083c88"}
+            backgroundColor={`#fff`}
+            objectFit='cover'
+            objectPosition='50% 50%'
           >
             <TextContainer>
               <Title>About Gyres</Title>
-              <Subtitle>"Turning and turning in the widening gyre"</Subtitle>
             </TextContainer>
-        
-          </StyledBackgroundImage>
-        </ImageContainer>
+          </BackgroundImage>
+          <PhotoCredit>
+            <PhotoDesc>
+              Viking Gyre, a spiral of icebergs in the Arctic North Atlantic.
+            </PhotoDesc>
+            <Credit>
+              Credit: Nia Power via National Geographic
+            </Credit>
+          </PhotoCredit>
+        </>
       )
     }}
   />
 )
 
-const ImageContainer = styled('div')({
-  backgroundColor: '#fff',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
-
-const StyledBackgroundImage = styled(BackgroundImage)({
-  minWidth: '700px',
-  maxWidth: '800px',
+const HeroAbout = styled(BackgroundSection)({
+  width: '100vw',
   height: '400px',
-  backgroundPosition: 'bottom center',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'center',
-  borderRadius: '15px',
-  overflow: 'hidden',
 });
 
 const TextContainer = styled('div')({
@@ -72,22 +68,39 @@ const Title = styled('h1')({
   color: '#fff',
   fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
   fontWeight: 300,
+  margin: 0,
   [breakpoints.md]: {
     fontSize: '1.75rem',
-    marginBottom: '1.2rem',
   },
 });
 
-const Subtitle = styled('h2')({
-  color: '#fff',
-  opacity: 0.9,
-  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-  fontStyle: "italic",
-  fontWeight: 300,
-  [breakpoints.md]: {
-    fontSize: '1.5rem',
-    marginBottom: '1rem',
+const PhotoCredit = styled('div')({
+  width: '90vw',
+  position: '50%',
+  margin: '0 auto',
+  fontSize: '12px',
+  color: colors.text4,
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  
+  [breakpoints.sm]: {
+    gridTemplateColumns: '100%',
   },
+})
+
+const PhotoDesc = styled('p')({
+  fontSize: 'inherit',
+  justifySelf: 'start',
+  marginBottom: '4px',
+});
+
+const Credit = styled('p')({
+  fontSize: 'inherit',
+  marginBottom: '4px',
+  justifySelf: 'end',
+  [breakpoints.sm]: {
+    justifySelf: 'start',
+  }
 });
 
 export default HeroAbout;

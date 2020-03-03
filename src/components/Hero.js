@@ -11,7 +11,7 @@ const BackgroundSection = ({ className, ...props }) => (
       query {
         image: file(relativePath: { eq: "circuits-bkd.png" }) {
           childImageSharp {
-            fluid(quality: 90, maxWidth: 1920) {
+            fluid(quality: 100, maxWidth: 1920) {
               ...GatsbyImageSharpFluid_withWebp
             }
           }

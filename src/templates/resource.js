@@ -19,19 +19,20 @@ const StyledWrapper = styled('div')({
 })
 
 const PageSizing = styled(ContentArea)({
-  margin: '20px',
-  listStyle: 'none',
+  margin: '20px 20px 0px 20px',
   display: 'grid',
-  gridTemplateColumns: 'repeat(1, minmax(600px, 1fr))',
+  gridTemplateColumns: 'repeat(1, minmax(400px, 1fr))',
   gridGap: '1rem',
   alignContent: 'center',
   justifyContent: 'center',
+  [breakpoints.md]: {
+    gridTemplateColumns: 'minmax(85px, 1fr)',
+  }
 });
 
 const StyledCard = styled('section')({
   backgroundColor: colors.white,
   color: colors.black,
-  maxWidth: '600px',
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, .04)",
   borderStyle: "solid",
   borderRadius: 8,
@@ -40,25 +41,56 @@ const StyledCard = styled('section')({
   paddingLeft: 24,
   paddingRight: 24,
   padding: 16,
-  margin: '20px auto auto auto',
+  marginBottom: 'auto',
 });
 
 const ImageInfoContainer = styled('div')({
   display: 'grid',
-  gridTemplateColumns: '1fr 4fr',
+  gridTemplateColumns: '120px 4fr',
   gridColumnGap: '12px',
   marginTop: 10,
+  [breakpoints.sm]: {
+    gridTemplateColumns: '1fr',
+  }
 })
 
-const StyledImg = styled(Img)({
-  maxWidth: '400px',
+const NonStretchImg = props => {
+  let normalizedProps = props
+  if (props.fluid && props.fluid.presentationWidth) {
+    normalizedProps = {
+      ...props,
+      style: {
+        ...(props.style || {}),
+        maxWidth: props.fluid.presentationWidth,
+        margin: "0 auto", // Used to center the image
+        
+      },
+      imgStyle:{ objectFit: `contain` },
+    }
+  }
+
+  return <Img {...normalizedProps} />
+}
+
+const StyledImg = styled(NonStretchImg)({
+
+  width: '100%',
+  objectFit: 'contain',
+  [breakpoints.sm]: {
+    visibility: 'hidden',
+    opacity: 0,
+    width: 0,
+    height: 0,
+  }
 });
 
 const Info = styled('div')({
-  
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });
 
-const Title = styled('h2')({
+const TitleYear = styled('h2')({
   color: colors.black,
   fontWeight: 600,
   flex: '1 1 0%',
@@ -68,7 +100,7 @@ const Title = styled('h2')({
   paddingRight: 24,
   fontSize: '18px',
   lineHeight: 1.3,
-  marginBottom: '5px',
+  marginBottom: '10px',
 });
 
 const Subtitle = styled('h4')({
@@ -93,6 +125,7 @@ const Description = styled('div')({
   fontSize: '15px',
   lineHeight: '1.53em',
   fontFamily: "'Source Sans Pro', sans-serif",
+  whiteSpace: 'normal',
 })
 
 const MenuSeparator = styled('hr')({
@@ -153,30 +186,29 @@ export default ({ data: { resource } }) => {
               {resource.frontmatter.category}
             </CategoryLink>
             <ImageInfoContainer>
-              <StyledImg
-                sizes={{...resource.frontmatter.coverImage.childImageSharp.fluid,
-                  aspectRatio: resource.frontmatter.coverImage.childImageSharp.fluid.aspectRatio
-                }}
-              />
-              <Info>
-                <Title>
-                  {resource.frontmatter.title} ({resource.frontmatter.pubYear})
-                </Title>
-                <Subtitle>{resource.frontmatter.subtitle}</Subtitle>
+              <StyledImg fluid={{...resource.frontmatter.coverImage.childImageSharp.fluid}} />             
+            <Info>
+                {resource.frontmatter.pubYear !== null ?
+                  <TitleYear>{resource.frontmatter.title} ({resource.frontmatter.pubYear})</TitleYear> :
+                  <TitleYear>{resource.frontmatter.title}</TitleYear>   
+                }
+                {resource.frontmatter.subtitle !== null &&
+                <Subtitle>{resource.frontmatter.subtitle}</Subtitle>}
                 <Author>{resource.frontmatter.author}</Author>
                 <Description>{resource.frontmatter.description}</Description>
               </Info>
             </ImageInfoContainer>
             <StyledHR />
             <TagLinkContainer>
+              <div>
                 {resource.frontmatter.tag.map(tag => (
                   <TagLink key={`tag-${tag}`} tag={tag} linkRoot={linkRoot} />
                 ))}
-
-                <StyledButton href={resource.frontmatter.url}>
-                  {resource.frontmatter.action}
-                </StyledButton> 
-              </TagLinkContainer>
+              </div>
+              <StyledButton href={resource.frontmatter.url}>
+                {resource.frontmatter.action}
+              </StyledButton> 
+            </TagLinkContainer>
           </StyledCard>
         </PageSizing>
       </StyledWrapper>

@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import PropTypes from 'prop-types';
-import { Link } from 'gatsby';
 import styled from '@emotion/styled';
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import Img from 'gatsby-image';
 import Layout from '../components/Layout';
 import CategoryLink from '../components/CategoryLink';
@@ -107,7 +106,6 @@ const NonStretchImg = props => {
 }
 
 const StyledImg = styled(NonStretchImg)({
-
   width: '100%',
   objectFit: 'contain',
   [breakpoints.sm]: {
@@ -135,6 +133,8 @@ const TitleYear = styled('h2')({
   fontSize: '18px',
   lineHeight: 1.3,
   marginBottom: '10px',
+
+  
 });
 
 const Subtitle = styled('h4')({
@@ -152,6 +152,10 @@ const Subtitle = styled('h4')({
 
 const Author = styled(Subtitle)({
   marginBottom: '16px',
+  
+  '::before': {
+    content: '")"',
+  }
 });
 
 const Description = styled('div')({
@@ -198,8 +202,6 @@ const StyledButton = styled('a')({
     backgroundColor: colors.secondary,
   },
 })
-
-
 
 const Resources = ({
   pageContext: {

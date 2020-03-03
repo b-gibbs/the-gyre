@@ -42,17 +42,9 @@ const FooterLink = styled(Link)({
   ':active, :hover, :focus': {
     color: colors.secondary,
   },
-
-  [breakpoints.md]: {
-    order: 2,
-
-    ':&:last-of-type': {
-      marginRight: 0,
-    }
-  }
 });
 
-const FooterLinkA = styled(Link)({
+const FooterLinkA = styled('a')({
   color: colors.text2,
   display: 'inline-block',
   margin: '0 0.25rem',
@@ -62,14 +54,6 @@ const FooterLinkA = styled(Link)({
   ':active, :hover, :focus': {
     color: colors.secondary,
   },
-
-  [breakpoints.md]: {
-    order: 2,
-
-    ':&:last-of-type': {
-      marginRight: 0,
-    }
-  }
 });
 
 export default () => (

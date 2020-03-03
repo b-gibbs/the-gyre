@@ -32,8 +32,11 @@ const NavbarBody = styled.div({
   margin: '0 0 0 1rem',
   [breakpoints.md]: {
     width: '30%',
-  }
-})
+  },
+  [breakpoints.sm]: {
+    margin: 0,
+  },
+});
 
 const LogoLink = styled(Link)({
   width: '180px',

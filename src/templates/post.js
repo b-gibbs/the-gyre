@@ -4,47 +4,11 @@ import MDXRenderer from 'gatsby-plugin-mdx/mdx-renderer';
 import styled from '@emotion/styled';
 import SEO from '../components/SEO/SEO';
 import Layout from '../components/Layout';
-import ContentArea from '../components/ContentArea';
+import { PageBody } from '$styles';
 import { colors } from 'gatsby-theme-apollo-core';
 import breakpoints from '../utils/breakpoints';
 
-const BlogLayout = styled(Layout)({
-  margin: '5rem auto 6rem',
-  maxWidth: '1000px',
-});
 
-
-const Blog = styled('div')({
-  marginBottom: '5rem',
-})
-
-const Header = styled('header')({
-  fontSize: '24px',
-  color: colors.text1,
-  margin: '40px',
-
-  [breakpoints.sm]: {
-    margin: '10px 20px',
-  }
-});
-
-
-const Content = styled(ContentArea)({
-  margin: '40px',
-
-  [breakpoints.sm]: {
-    margin: '10px 20px',
-  }
-});
-
-const BlogHeading = styled('h1')({
-  fontSize: '1.6rem',
-  color: colors.primary,
-
-  [breakpoints.md]: {
-    fontSize: '1.875rem',
-  }
-});
 
 
 export default ({ data: { post, image } }) => {
@@ -56,14 +20,11 @@ export default ({ data: { post, image } }) => {
         frontmatter={post.frontmatter}
         isBlogPost
       />
-      <BlogLayout title={post.frontmatter.title}>
-        <Blog>
-          <Header>
-            <BlogHeading>{post.frontmatter.title}</BlogHeading>
-          </Header>
-          <Content>{content}</Content>
-        </Blog>
-      </BlogLayout>
+      <Layout title={post.frontmatter.title}>
+        <PageBody>
+          {content}
+        </PageBody>
+      </Layout>
     </React.Fragment>
   )
 }
