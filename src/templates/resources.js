@@ -133,8 +133,6 @@ const TitleYear = styled('h2')({
   fontSize: '18px',
   lineHeight: 1.3,
   marginBottom: '10px',
-
-  
 });
 
 const Subtitle = styled('h4')({
@@ -152,10 +150,6 @@ const Subtitle = styled('h4')({
 
 const Author = styled(Subtitle)({
   marginBottom: '16px',
-  
-  '::before': {
-    content: '")"',
-  }
 });
 
 const Description = styled('div')({
