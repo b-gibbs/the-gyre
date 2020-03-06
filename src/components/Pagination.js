@@ -37,15 +37,15 @@ const Pagination = ({
 }) => (
   <Wrapper>
     {!isFirstPage && currentPage !== 2 && (
-      <PaginationLink to={linkBase} title="jump to newest posts">
-        « <span className="screen-reader-text">newest posts</span>
+      <PaginationLink to={linkBase} title="jump to first">
+        « <span className="screen-reader-text">first</span>
       </PaginationLink>
     )}
     {!isFirstPage && (
       <PaginationLink
         to={`${linkBase}${currentPage - 1 === 1 ? '' : currentPage - 1}/`}
       >
-        ‹ newer posts
+        ‹ back
       </PaginationLink>
     )}
     {!isLastPage && (
@@ -53,15 +53,15 @@ const Pagination = ({
         className="moveRight"
         to={`${linkBase}${currentPage + 1}/`}
       >
-        older posts ›
+        next ›
       </PaginationLink>
     )}
     {!isLastPage && currentPage !== totalPages - 1 && (
       <PaginationLink
         to={`${linkBase}${totalPages}/`}
-        title="jump to oldest posts"
+        title="jump to last"
       >
-        <span className="screen-reader-text">oldest posts</span> »
+        <span className="screen-reader-text">last</span> »
       </PaginationLink>
     )}
   </Wrapper>

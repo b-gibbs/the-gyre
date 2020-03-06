@@ -25,7 +25,7 @@ const getHeading = ({
   }
 
   if (type === 'all') {
-    return 'Latest Resources';
+    return 'Top Resources';
   }
 
   return `Resources`;

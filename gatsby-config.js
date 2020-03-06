@@ -1,5 +1,6 @@
 
 const queries = require('./src/utils/algolia');
+const jargon = require(`./jargon`);
 
 require('dotenv').config();
 
@@ -96,6 +97,10 @@ module.exports = {
             options: {
               maxWidth: 1380,
             },
+          },
+          {
+            resolve: `gatsby-remark-jargon`,
+            options: { jargon },
           },
         ],
       },
