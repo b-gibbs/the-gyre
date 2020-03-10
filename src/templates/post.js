@@ -6,10 +6,21 @@ import SEO from '../components/SEO/SEO';
 import Layout from '../components/Layout';
 import { PageBody } from '$styles';
 import { colors } from 'gatsby-theme-apollo-core';
-import breakpoints from '../utils/breakpoints';
 
 
 
+const Title = styled('h2')({
+  color: colors.primary,
+  width: '100%',
+  textAlign: 'center',
+})
+
+const Subtitle = styled('h4')({
+  color: colors.text1,
+  width: '100%',
+  textAlign: 'center',
+  marginBottom: '30px',
+})
 
 export default ({ data: { post, image } }) => {
   const content = useMemo(() => <MDXRenderer>{post.body}</MDXRenderer>);
@@ -20,8 +31,10 @@ export default ({ data: { post, image } }) => {
         frontmatter={post.frontmatter}
         isBlogPost
       />
-      <Layout title={post.frontmatter.title}>
+      <Layout>
         <PageBody>
+          <Title>{post.frontmatter.title}</Title>
+          <Subtitle>{post.frontmatter.subtitle}</Subtitle>
           {content}
         </PageBody>
       </Layout>
@@ -35,6 +48,7 @@ export const pageQuery = graphql`
       body
       frontmatter {
         title
+        subtitle
         description
         category
         tag

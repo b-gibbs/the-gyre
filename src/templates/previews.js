@@ -101,28 +101,30 @@ const StyledHR = styled('hr')({
   borderWidth: '0px',
 })
 
-const StyledButton = styled(Link)`
-  background-color: ${colors.primaryLight};
-  color: ${colors.white};
-  cursor: pointer;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: 36px;
-  min-width: 100px;
-  font-weight: 600;
-  white-space: no-wrap;
-  border-radius: 4px;
-  border-width: 0px;
-  padding: 0px 12px;
-  outline: 0px;
-  text-decoration: none;
+const StyledButton = styled('a')({
+  margin: '0 0 0 auto',
+  backgroundColor: colors.primaryLight,
+  color: colors.white,
+  cursor: 'pointer',
+  display: 'inline-flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '36px',
+  minWidth: '100px',
+  fontWeight: 600,
+  whiteSpace: 'no-wrap',
+  borderRadius: '5px',
+  borderWidth: '0px',
+  padding: '0px 12px',
+  outline: '0px',
+  textDecoration: 'none',
+  textTransform: 'capitalize',
 
-  :hover,
-  :active {
-    background-color: ${colors.secondary};
-  }
-`
+  ':hover, :active': {
+    backgroundColor: colors.secondary,
+    color: colors.white,
+  },
+})
 
 const Previews = ({
   pageContext: {

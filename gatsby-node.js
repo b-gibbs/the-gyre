@@ -155,6 +155,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             frontmatter {
               date
               title
+              subtitle
               description
               slug
               path

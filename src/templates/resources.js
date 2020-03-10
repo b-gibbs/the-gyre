@@ -194,6 +194,7 @@ const StyledButton = styled('a')({
 
   ':hover, :active': {
     backgroundColor: colors.secondary,
+    color: colors.white,
   },
 })
 
