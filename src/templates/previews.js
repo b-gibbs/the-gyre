@@ -101,7 +101,7 @@ const StyledHR = styled('hr')({
   borderWidth: '0px',
 })
 
-const StyledButton = styled('a')({
+const StyledButton = styled(Link)({
   margin: '0 0 0 auto',
   backgroundColor: colors.primaryLight,
   color: colors.white,
